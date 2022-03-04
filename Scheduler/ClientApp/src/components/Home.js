@@ -1,0 +1,140 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = require("react");
+var react_redux_1 = require("react-redux");
+var reactstrap_1 = require("reactstrap");
+var Hero_1 = require("./Hero");
+var PortfolioItems_1 = require("./PortfolioItems");
+var Home = function () {
+    var renderAbout = function () {
+        return (React.createElement("div", { id: "about", className: "paddsection" },
+            React.createElement(reactstrap_1.Container, null,
+                React.createElement(reactstrap_1.Row, { className: "justify-content-between" },
+                    React.createElement(reactstrap_1.Col, { lg: "4" },
+                        React.createElement("div", { className: "div-img-bg" },
+                            React.createElement("div", { className: "about-img" },
+                                React.createElement("img", { src: "assets/img/me.jpg", className: "img-responsive", alt: "me" })))),
+                    React.createElement(reactstrap_1.Col, { lg: "7" },
+                        React.createElement("div", { className: "about-descr" },
+                            React.createElement("p", { className: "p-heading" }, "I'm a researcher/developer passionate about understanding the human-computer interaction from a holistic point of view. "),
+                            React.createElement("p", { className: "separator" }, "Data is not as simple as numbers, there is an intrinsic relationship with the people who is represented by the data. The data collected only represents part of the people's context. In addition, the person reading the data might have different understandings of the data and its context. However, this is rarely acknowledged in research and practice. My aim is bring this to the forefront and develop solutions with a human-centred approach.")))))));
+    };
+    var renderServices = function () {
+        return (React.createElement("div", { id: "services" },
+            React.createElement(reactstrap_1.Container, null,
+                React.createElement(reactstrap_1.Row, null,
+                    React.createElement(reactstrap_1.Col, { lg: "3", className: "swiper-slide" },
+                        React.createElement("div", { className: "services-block" },
+                            React.createElement("i", { className: "bi bi-binoculars" }),
+                            React.createElement("span", null, "RESEARCH"),
+                            React.createElement("p", { className: "separator" }, "Human-computer interaction research with a human-centric approach "))),
+                    React.createElement(reactstrap_1.Col, { lg: "3", className: "swiper-slide" },
+                        React.createElement("div", { className: "services-block" },
+                            React.createElement("i", { className: "bi bi-briefcase" }),
+                            React.createElement("span", null, "UI/UX DESIGN"),
+                            React.createElement("p", { className: "separator" }, "Human-centred design to build solutions with people not for people "))),
+                    React.createElement(reactstrap_1.Col, { lg: "3", className: "swiper-slide" },
+                        React.createElement("div", { className: "services-block" },
+                            React.createElement("i", { className: "bi bi-bar-chart" }),
+                            React.createElement("span", null, "WEB DEVELOPMENT"),
+                            React.createElement("p", { className: "separator" }, "Full-stack web development with cutting-edge methods such as participatory design "))),
+                    React.createElement(reactstrap_1.Col, { lg: "3", className: "swiper-slide" },
+                        React.createElement("div", { className: "services-block" },
+                            React.createElement("i", { className: "bi bi-brightness-high" }),
+                            React.createElement("span", null, "Analytics"),
+                            React.createElement("p", { className: "separator" }, "Analytics with interactive data visualisations to bring context to the data ")))))));
+    };
+    var renderPublications = function () {
+        return (React.createElement("div", { id: "publications", className: "paddsection" },
+            React.createElement(reactstrap_1.Container, null,
+                React.createElement("div", { className: "section-title text-center" },
+                    React.createElement("h2", null, "My Publications"))),
+            React.createElement(reactstrap_1.Container, null,
+                React.createElement(reactstrap_1.Row, null,
+                    React.createElement(reactstrap_1.Col, { lg: "12", className: "d-flex justify-content-center" },
+                        React.createElement("ul", null,
+                            React.createElement("li", null,
+                                "Canizares Mena, M. A, & Isaias, P. T. (2019). Gathering researchers\u2019 requirements to develop a learning technologies dashboard. In ",
+                                React.createElement("i", null, "Proceedings of the 12th IADIS International Conference Information Systems 2019, IS 2019"),
+                                " (pp. 51-59). IADIS Press.")))))));
+    };
+    var renderBlog = function () {
+        return (React.createElement("div", { id: "journal", className: "text-left paddsection" },
+            React.createElement(reactstrap_1.Container, null,
+                React.createElement("div", { className: "section-title text-center" },
+                    React.createElement("h2", null, "journal"))),
+            React.createElement(reactstrap_1.Container, null,
+                React.createElement("div", { className: "journal-block" },
+                    React.createElement(reactstrap_1.Row, null,
+                        React.createElement(reactstrap_1.Col, { lg: "4", md: "6" },
+                            React.createElement("div", { className: "journal-info" },
+                                React.createElement("a", { href: "blog-single.html" },
+                                    React.createElement("img", { src: "assets/img/blog-post-1.jpg", className: "img-responsive", alt: "img" })),
+                                React.createElement("div", { className: "journal-txt" },
+                                    React.createElement("h4", null,
+                                        React.createElement("a", { href: "blog-single.html" }, "SO LETS MAKE THE MOST IS BEAUTIFUL")),
+                                    React.createElement("p", { className: "separator" }, "To an English person, it will seem like simplified English")))),
+                        React.createElement(reactstrap_1.Col, { lg: "4", md: "6" },
+                            React.createElement("div", { className: "journal-info" },
+                                React.createElement("a", { href: "blog-single.html" },
+                                    React.createElement("img", { src: "assets/img/blog-post-2.jpg", className: "img-responsive", alt: "img" })),
+                                React.createElement("div", { className: "journal-txt" },
+                                    React.createElement("h4", null,
+                                        React.createElement("a", { href: "blog-single.html" }, "WE'RE GONA MAKE DREAMS COMES")),
+                                    React.createElement("p", { className: "separator" }, "To an English person, it will seem like simplified English")))),
+                        React.createElement(reactstrap_1.Col, { lg: "4", md: "6" },
+                            React.createElement("div", { className: "journal-info" },
+                                React.createElement("a", { href: "blog-single.html" },
+                                    React.createElement("img", { src: "assets/img/blog-post-3.jpg", className: "img-responsive", alt: "img" })),
+                                React.createElement("div", { className: "journal-txt" },
+                                    React.createElement("h4", null,
+                                        React.createElement("a", { href: "blog-single.html" }, "NEW LIFE CIVILIZATIONS TO BOLDLY")),
+                                    React.createElement("p", { className: "separator" }, "To an English person, it will seem like simplified English")))))))));
+    };
+    var renderContact = function () {
+        return (React.createElement("div", { id: "contact", className: "paddsection" },
+            React.createElement(reactstrap_1.Container, null,
+                React.createElement(reactstrap_1.Row, null,
+                    React.createElement(reactstrap_1.Col, { lg: "6" },
+                        React.createElement("div", { className: "contact-contact" },
+                            React.createElement("h2", { className: "mb-30" }, "GET IN TOUCH"),
+                            React.createElement("ul", { className: "contact-details" },
+                                React.createElement("li", null,
+                                    React.createElement("span", null, "Gardens Points, Block Y")),
+                                React.createElement("li", null,
+                                    React.createElement("span", null, "Queensland University of Technology")),
+                                React.createElement("li", null,
+                                    React.createElement("span", null, "Queensland, Australia"))))),
+                    React.createElement(reactstrap_1.Col, { lg: "6" },
+                        React.createElement(reactstrap_1.Form, null,
+                            React.createElement(reactstrap_1.Row, { form: true },
+                                React.createElement(reactstrap_1.Col, { lg: "6" },
+                                    React.createElement(reactstrap_1.FormGroup, null,
+                                        React.createElement(reactstrap_1.Input, { type: "text", name: "name", id: "name", placeholder: "Your Name", required: true }))),
+                                React.createElement(reactstrap_1.Col, { lg: "6" },
+                                    React.createElement(reactstrap_1.FormGroup, null,
+                                        React.createElement(reactstrap_1.Input, { type: "email", name: "email", id: "email", placeholder: "Your Email", required: true }))),
+                                React.createElement(reactstrap_1.Col, { lg: "12" },
+                                    React.createElement(reactstrap_1.FormGroup, null,
+                                        React.createElement(reactstrap_1.Input, { type: "text", name: "subject", id: "subject", placeholder: "Subject", required: true }))),
+                                React.createElement(reactstrap_1.Col, { lg: "12" },
+                                    React.createElement(reactstrap_1.FormGroup, null,
+                                        React.createElement(reactstrap_1.Input, { type: "textarea", className: "form-control", name: "message", placeholder: "Message", required: true }))),
+                                React.createElement(reactstrap_1.Col, { lg: "12" },
+                                    React.createElement("div", { className: "loading" }, "Loading"),
+                                    React.createElement("div", { className: "error-message" }),
+                                    React.createElement("div", { className: "sent-message" }, "Your message has been sent. Thank you!")),
+                                React.createElement(reactstrap_1.Col, { lg: "12", className: "mt-0" },
+                                    React.createElement(reactstrap_1.Button, { className: "btn btn-defeault btn-block w-100" }, "Send Message")))))))));
+    };
+    return (React.createElement("div", null,
+        React.createElement(Hero_1.default, null),
+        React.createElement("main", { id: "main" },
+            renderAbout(),
+            renderServices(),
+            renderPublications(),
+            React.createElement(PortfolioItems_1.default, null),
+            renderContact())));
+};
+exports.default = (0, react_redux_1.connect)()(Home);
+//# sourceMappingURL=Home.js.map

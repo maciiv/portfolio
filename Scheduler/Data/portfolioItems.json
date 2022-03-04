@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Bar chart",
+    "description": "A traditional bar chart with interactive properties",
+    "imageUrl": "assets/img/portfolio/portfolio-1.jpg",
+    "gitHubUrl": "",
+    "itemUrl": "visualisations/bar",
+    "filter": "visualisation"
+  },
+  {
+    "name": "Scheduler",
+    "description": "A web app to schedule motorcycles",
+    "imageUrl": "assets/img/portfolio/portfolio-2.jpg",
+    "gitHubUrl": "",
+    "itemUrl": "webapps/scheduler",
+    "filter": "web"
+  },
+  {
+    "name": "Time scatter plot",
+    "description": "An interactive scatter plot in function of time",
+    "imageUrl": "assets/img/portfolio/portfolio-3.jpg",
+    "gitHubUrl": "",
+    "itemUrl": "visualisations/scatter",
+    "filter": "visualisation"
+  },
+  {
+    "name": "Dashboard",
+    "description": "An interactive dashboard with several visualisations",
+    "imageUrl": "assets/img/portfolio/portfolio-4.jpg",
+    "gitHubUrl": "",
+    "itemUrl": "visualisations/dashboard",
+    "filter": "visualisation"
+  },
+  {
+    "name": "Trivia",
+    "description": "A web app for different categories of trivias",
+    "imageUrl": "assets/img/portfolio/portfolio-5.jpg",
+    "gitHubUrl": "",
+    "itemUrl": "webapps/trivia",
+    "filter": "web"
+  },
+  {
+    "name": "Memory",
+    "description": "A web app to play a cards memory game",
+    "imageUrl": "assets/img/portfolio/portfolio-6.jpg",
+    "gitHubUrl": "",
+    "itemUrl": "webapps/memory",
+    "filter": "web"
+  }
+]
