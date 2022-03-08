@@ -38,13 +38,13 @@ class Hero extends React.PureComponent<HeroProps> {
     private async startHero() {
         await this.props.writeHero("Miguel Canizares");
         await this.props.deleteHero();
-        await this.props.writeHero("Researcher");
+        await this.props.writeHero("A Researcher");
         await this.props.deleteHero();
-        await this.props.writeHero("Designer");
+        await this.props.writeHero("A Designer");
         await this.props.deleteHero();
-        await this.props.writeHero("Developer");
+        await this.props.writeHero("A Developer");
         await this.props.deleteHero();
-        await this.props.writeHero("Freelancer");
+        await this.props.writeHero("A Freelancer");
         await this.props.deleteHero();
         await this.props.writeHero("Miguel Canizares", true);
     }

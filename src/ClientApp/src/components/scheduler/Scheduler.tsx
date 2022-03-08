@@ -1,8 +1,8 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { Container, Table, UncontrolledAlert } from 'reactstrap';
-import { ApplicationState } from '../store';
-import * as SchedulerStore from '../store/Scheduler';
+import { ApplicationState } from '../../store';
+import * as SchedulerStore from '../../store/Scheduler';
 
 type SchedulerProps =
     SchedulerStore.SchedulerState

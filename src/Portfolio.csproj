@@ -30,13 +30,15 @@
     <None Remove="ClientApp\src\components\Hero.tsx" />
     <None Remove="ClientApp\src\components\PortfolioItems.tsx" />
     <None Remove="ClientApp\src\components\Scheduler.tsx" />
+    <None Remove="ClientApp\src\components\Timer.tsx" />
+    <None Remove="ClientApp\src\components\trivia\TriviaHome.tsx" />
+    <None Remove="ClientApp\src\components\trivia\TriviaQuestions.tsx" />
     <None Remove="ClientApp\src\store\Hero.ts" />
     <None Remove="ClientApp\src\store\PortfolioItems.ts" />
     <None Remove="ClientApp\src\store\Scheduler.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\components\Scheduler.tsx" />
+    <None Remove="ClientApp\src\store\Timer.ts" />
+    <None Remove="ClientApp\src\store\TriviaHome.ts" />
+    <None Remove="ClientApp\src\store\TriviaQuestions.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_redux_1 = require("react-redux");
 var reactstrap_1 = require("reactstrap");
-var SchedulerStore = require("../store/Scheduler");
+var SchedulerStore = require("../../store/Scheduler");
 var Scheduler = /** @class */ (function (_super) {
     __extends(Scheduler, _super);
     function Scheduler() {

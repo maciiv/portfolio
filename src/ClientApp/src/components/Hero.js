@@ -99,25 +99,25 @@ var Hero = /** @class */ (function (_super) {
                         return [4 /*yield*/, this.props.deleteHero()];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.props.writeHero("Researcher")];
+                        return [4 /*yield*/, this.props.writeHero("A Researcher")];
                     case 3:
                         _a.sent();
                         return [4 /*yield*/, this.props.deleteHero()];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.props.writeHero("Designer")];
+                        return [4 /*yield*/, this.props.writeHero("A Designer")];
                     case 5:
                         _a.sent();
                         return [4 /*yield*/, this.props.deleteHero()];
                     case 6:
                         _a.sent();
-                        return [4 /*yield*/, this.props.writeHero("Developer")];
+                        return [4 /*yield*/, this.props.writeHero("A Developer")];
                     case 7:
                         _a.sent();
                         return [4 /*yield*/, this.props.deleteHero()];
                     case 8:
                         _a.sent();
-                        return [4 /*yield*/, this.props.writeHero("Freelancer")];
+                        return [4 /*yield*/, this.props.writeHero("A Freelancer")];
                     case 9:
                         _a.sent();
                         return [4 /*yield*/, this.props.deleteHero()];

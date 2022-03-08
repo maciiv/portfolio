@@ -1,0 +1,217 @@
+[
+  {
+    "category": "Technology and science",
+    "questions": [
+      {
+        "question": "What year was the very first model of the iPhone released?",
+        "options": [
+          {
+            "option": "2006",
+            "isCorrect": false
+          },
+          {
+            "option": "2007",
+            "isCorrect": true
+          },
+          {
+            "option": "2005",
+            "isCorrect": false
+          },
+          {
+            "option": "2008",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "question": "What's the shortcut for the \"copy\" function on most computers",
+        "options": [
+          {
+            "option": "ctrl + p",
+            "isCorrect": false
+          },
+          {
+            "option": "ctrl + v",
+            "isCorrect": false
+          },
+          {
+            "option": "ctrl + c",
+            "isCorrect": true
+          },
+          {
+            "option": "ctrl + x",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "question": "What is often seen as the smallest unit of memory?",
+        "options": [
+          {
+            "option": "Kilobyte",
+            "isCorrect": true
+          },
+          {
+            "option": "Byte",
+            "isCorrect": false
+          },
+          {
+            "option": "Megabyte",
+            "isCorrect": false
+          },
+          {
+            "option": "Gigabyte",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "question": "Which of the following is a type of OS?",
+        "options": [
+          {
+            "option": "Java",
+            "isCorrect": false
+          },
+          {
+            "option": "Windows",
+            "isCorrect": true
+          },
+          {
+            "option": "C#",
+            "isCorrect": false
+          },
+          {
+            "option": "Python",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "question": "Who is often called the father of the computer?",
+        "options": [
+          {
+            "option": "Charles Babbage",
+            "isCorrect": true
+          },
+          {
+            "option": "Bill Gates",
+            "isCorrect": false
+          },
+          {
+            "option": "Steve Jobs",
+            "isCorrect": false
+          },
+          {
+            "option": "Alan Turing",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "question": "What does \"HTTP\" stands for?",
+        "options": [
+          {
+            "option": "Hyper transportation text protocol",
+            "isCorrect": false
+          },
+          {
+            "option": "Hyper text transfer protocol",
+            "isCorrect": true
+          },
+          {
+            "option": "High text transfer protocol",
+            "isCorrect": false
+          },
+          {
+            "option": "High transfer text protocol",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "question": "What is the name of the man who launched eBay back in 1995?",
+        "options": [
+          {
+            "option": "Bill Gates",
+            "isCorrect": false
+          },
+          {
+            "option": "Steve Job",
+            "isCorrect": false
+          },
+          {
+            "option": "Satya Nadella",
+            "isCorrect": false
+          },
+          {
+            "option": "Pierre Omidyar",
+            "isCorrect": true
+          }
+        ]
+      },
+      {
+        "question": "When was windows announced?",
+        "options": [
+          {
+            "option": "1980",
+            "isCorrect": false
+          },
+          {
+            "option": "1983",
+            "isCorrect": true
+          },
+          {
+            "option": "1985",
+            "isCorrect": false
+          },
+          {
+            "option": "1986",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "question": "What was Twitter's original name?",
+        "options": [
+          {
+            "option": "Tweet",
+            "isCorrect": false
+          },
+          {
+            "option": "Twttr",
+            "isCorrect": true
+          },
+          {
+            "option": "Tweeting",
+            "isCorrect": false
+          },
+          {
+            "option": "Odeo",
+            "isCorrect": false
+          }
+        ]
+      },
+      {
+        "question": "Which company offered the first cloud service?",
+        "options": [
+          {
+            "option": "Amazon",
+            "isCorrect": true
+          },
+          {
+            "option": "Microsoft",
+            "isCorrect": false
+          },
+          {
+            "option": "Google",
+            "isCorrect": false
+          },
+          {
+            "option": "Compaq",
+            "isCorrect": false
+          }
+        ]
+      }
+    ]
+  }
+]

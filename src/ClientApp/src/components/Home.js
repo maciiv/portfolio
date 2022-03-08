@@ -54,7 +54,7 @@ var Home = function () {
                     React.createElement(reactstrap_1.Col, { lg: "12", className: "d-flex justify-content-center" },
                         React.createElement("ul", null,
                             React.createElement("li", null,
-                                "Canizares Mena, M. A, & Isaias, P. T. (2019). Gathering researchers\u2019 requirements to develop a learning technologies dashboard. In ",
+                                "Canizares Mena, M. A, & Isaias, P. T. (2019). Gathering researchers\uFFFD requirements to develop a learning technologies dashboard. In ",
                                 React.createElement("i", null, "Proceedings of the 12th IADIS International Conference Information Systems 2019, IS 2019"),
                                 " (pp. 51-59). IADIS Press.")))))));
     };
