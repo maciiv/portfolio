@@ -33,18 +33,19 @@ var TriviaHome = /** @class */ (function (_super) {
         return (React.createElement(React.Fragment, null,
             React.createElement(reactstrap_1.Container, null,
                 React.createElement(reactstrap_1.Row, { className: "my-3" },
-                    React.createElement(reactstrap_1.Col, { md: "12", className: "d-flex" },
-                        React.createElement("h3", { className: "mx-auto" }, "Insert your name below")),
-                    React.createElement(reactstrap_1.Col, { md: "12", className: "d-flex" },
-                        React.createElement(reactstrap_1.Input, { type: "text", className: "mx-auto w-25" })),
+                    React.createElement(reactstrap_1.Col, { md: "12", className: "d-flex mt-5" },
+                        React.createElement(reactstrap_1.Input, { type: "text", className: "mx-auto w-50", placeholder: "Insert your name to be able to select a category", onChange: function (e) { return _this.setUserName(e); } })),
                     React.createElement(reactstrap_1.Col, { md: "12" },
-                        React.createElement("h3", { className: "my-3 mx-auto" }, "Select the category you want to play!")),
+                        React.createElement("h3", { className: "my-5 mx-auto" }, "Select the category you want to play!")),
                     this.props.trivia.map(function (trivia) {
                         return React.createElement(reactstrap_1.Col, null, _this.renderCard(trivia));
                     })))));
     };
     TriviaHome.prototype.ensureDataFetched = function () {
         this.props.requestTrivia();
+    };
+    TriviaHome.prototype.setUserName = function (e) {
+        this.props.receiveUserName(e.target.value);
     };
     TriviaHome.prototype.renderCard = function (trivia) {
         return (React.createElement(reactstrap_1.Card, null,
@@ -56,7 +57,7 @@ var TriviaHome = /** @class */ (function (_super) {
                     "? If you think you are a specialist in this category, try answering ",
                     trivia.questions.length,
                     " questions and test yourself"),
-                React.createElement(react_router_dom_1.Link, { to: "/webapps/trivia-questions/".concat(trivia.category), className: "btn btn-primary" }, "Select"))));
+                React.createElement(react_router_dom_1.Link, { to: { pathname: "/webapps/trivia/questions/".concat(trivia.category) }, className: this.props.userName !== undefined && this.props.userName !== "" ? "btn btn-primary" : "btn btn-primary disabled" }, "Select"))));
     };
     return TriviaHome;
 }(React.PureComponent));

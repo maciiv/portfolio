@@ -12,9 +12,10 @@ exports.actionCreators = {
             });
             dispatch({ type: 'REQUEST_TRIVIA' });
         }
-    }; }
+    }; },
+    receiveUserName: function (userName) { return ({ type: 'RECEIVE_USER', userName: userName }); }
 };
-var unloadedState = { isLoading: false, trivia: [] };
+var unloadedState = { isLoading: false, trivia: [], userName: "" };
 var reducer = function (state, incomingAction) {
     if (state === undefined) {
         return unloadedState;
@@ -24,12 +25,20 @@ var reducer = function (state, incomingAction) {
         case 'REQUEST_TRIVIA':
             return {
                 isLoading: true,
-                trivia: state.trivia
+                trivia: state.trivia,
+                userName: state.userName
             };
         case 'RECEIVE_TRIVIA':
             return {
                 isLoading: false,
-                trivia: action.trivia
+                trivia: action.trivia,
+                userName: state.userName
+            };
+        case 'RECEIVE_USER':
+            return {
+                isLoading: true,
+                trivia: state.trivia,
+                userName: action.userName
             };
         default:
             return state;

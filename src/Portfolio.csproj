@@ -33,12 +33,14 @@
     <None Remove="ClientApp\src\components\Timer.tsx" />
     <None Remove="ClientApp\src\components\trivia\TriviaHome.tsx" />
     <None Remove="ClientApp\src\components\trivia\TriviaQuestions.tsx" />
+    <None Remove="ClientApp\src\components\trivia\TriviaWinners.tsx" />
     <None Remove="ClientApp\src\store\Hero.ts" />
     <None Remove="ClientApp\src\store\PortfolioItems.ts" />
     <None Remove="ClientApp\src\store\Scheduler.ts" />
     <None Remove="ClientApp\src\store\Timer.ts" />
     <None Remove="ClientApp\src\store\TriviaHome.ts" />
     <None Remove="ClientApp\src\store\TriviaQuestions.ts" />
+    <None Remove="ClientApp\src\store\TriviaWinners.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

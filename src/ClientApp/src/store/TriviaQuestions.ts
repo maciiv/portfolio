@@ -5,7 +5,8 @@ export interface TriviaQuestionsState {
     isLoading: boolean,
     questions: TriviaQuestions[],
     currentQuestionIndex: number,
-    startTime: Date
+    startTime: Date,
+    score: number
 }
 
 export interface TriviaQuestions {
@@ -31,10 +32,15 @@ export interface ReceiveTriviaQuestionsAction {
 
 export interface NextTriviaQuestionAction {
     type: 'NEXT_TRIVIA_QUESTION'
-    currentQuestionIndex: number
+    currentQuestionIndex: number,
+    score: number
 }
 
-export type KnownAction = RequestTriviaQuestionsAction | ReceiveTriviaQuestionsAction | NextTriviaQuestionAction;
+export interface FinishTriviaAction {
+    type: 'FINISH_TRIVIA'
+}
+
+export type KnownAction = RequestTriviaQuestionsAction | ReceiveTriviaQuestionsAction | NextTriviaQuestionAction | FinishTriviaAction;
 
 export const actionCreators = {
     requestTriviaQuestions: (category: string): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -49,13 +55,13 @@ export const actionCreators = {
             dispatch({ type: 'REQUEST_TRIVIA_QUESTIONS' });
         }
     },
-    requestNextTriviaQuestion: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    requestNextTriviaQuestion: (isCorrect: boolean): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
-        dispatch({ type: 'NEXT_TRIVIA_QUESTION', currentQuestionIndex: appState.triviaQuestions.currentQuestionIndex + 1 })
+        dispatch({ type: 'NEXT_TRIVIA_QUESTION', currentQuestionIndex: appState.triviaQuestions.currentQuestionIndex + 1, score: isCorrect ? appState.triviaQuestions.score + 1 : appState.triviaQuestions.score })
     }
 }
 
-const unloadedState: TriviaQuestionsState = { isLoading: false, questions: [], currentQuestionIndex: 0 , startTime: new Date() };
+const unloadedState: TriviaQuestionsState = { isLoading: false, questions: [], currentQuestionIndex: 0 , startTime: new Date(), score: 0 };
 
 export const reducer: Reducer<TriviaQuestionsState> = (state: TriviaQuestionsState | undefined, incomingAction: Action): TriviaQuestionsState => {
     if (state === undefined) {
@@ -69,22 +75,25 @@ export const reducer: Reducer<TriviaQuestionsState> = (state: TriviaQuestionsSta
                 isLoading: true,
                 questions: state.questions,
                 currentQuestionIndex: state.currentQuestionIndex,
-                startTime: state.startTime
+                startTime: state.startTime,
+                score: state.score
             };
         case 'RECEIVE_TRIVIA_QUESTIONS':
             return {
                 isLoading: false,
                 questions: action.questions,
                 currentQuestionIndex: action.currentQuestionIndex,
-                startTime: action.startTime
+                startTime: action.startTime,
+                score: state.score
             };
         case 'NEXT_TRIVIA_QUESTION':
             return {
                 isLoading: false,
                 questions: state.questions,
                 currentQuestionIndex: action.currentQuestionIndex,
-                startTime: state.startTime
-            }
+                startTime: state.startTime,
+                score: action.score
+            };
         default:
             return state;
     }

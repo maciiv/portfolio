@@ -5,6 +5,7 @@ import * as Hero from './Hero';
 import * as PortfolioItems from './PortfolioItems';
 import * as TriviaHome from './TriviaHome';
 import * as TriviaQuestions from './TriviaQuestions';
+import * as TriviaWinners from './TriviaWinners';
 import * as Timer from './Timer';
 
 // The top-level state object
@@ -16,6 +17,7 @@ export interface ApplicationState {
     portfolioItems: PortfolioItems.PortfolioItemsState | undefined;
     triviaHome: TriviaHome.TriviaHomeState | undefined;
     triviaQuestions: TriviaQuestions.TriviaQuestionsState | undefined;
+    triviaWinners: TriviaWinners.TriviaWinnersState | undefined;
     timer: Timer.TimerState | undefined;
 }
 
@@ -30,6 +32,7 @@ export const reducers = {
     portfolioItems: PortfolioItems.reducer,
     triviaHome: TriviaHome.reducer,
     triviaQuestions: TriviaQuestions.reducer,
+    triviaWinners: TriviaWinners.reducer,
     timer: Timer.reducer
 };
 

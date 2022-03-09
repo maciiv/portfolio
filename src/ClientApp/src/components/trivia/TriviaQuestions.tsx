@@ -44,14 +44,15 @@ class TriviaQuestions extends React.PureComponent<TriviaQuestionsProps> {
         this.props.requestTriviaQuestions(category);
     }
 
-    private nextQuestion() {
-        this.props.requestNextTriviaQuestion();
+    private nextQuestion(isCorrect: boolean) {
+
+        this.props.requestNextTriviaQuestion(isCorrect);
     }
 
     private renderOptions(option: TriviaQuestionsStore.TriviaOptions) {
         return (
             <Col md="6" className="d-flex my-3">
-                <Button className="mx-auto w-50" onClick={() => this.nextQuestion()}>{option.option}</Button>
+                <Button className="mx-auto w-50" onClick={() => this.nextQuestion(option.isCorrect)}>{option.option}</Button>
             </Col>
         )
     }

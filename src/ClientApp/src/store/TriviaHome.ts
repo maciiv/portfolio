@@ -3,7 +3,8 @@ import { AppThunkAction } from './';
 
 export interface TriviaHomeState {
     isLoading: boolean,
-    trivia: Trivia[]
+    trivia: Trivia[],
+    userName: string
 }
 
 export interface Trivia {
@@ -24,7 +25,12 @@ export interface ReceiveTriviaAction {
     trivia: Trivia[]
 }
 
-export type KnownAction = RequestTriviaAction | ReceiveTriviaAction;
+export interface ReceiveUserNameAction {
+    type: 'RECEIVE_USER',
+    userName: string
+}
+
+export type KnownAction = RequestTriviaAction | ReceiveTriviaAction | ReceiveUserNameAction;
 
 export const actionCreators = {
     requestTrivia: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
@@ -38,10 +44,11 @@ export const actionCreators = {
 
             dispatch({ type: 'REQUEST_TRIVIA' });
         }
-    }
+    },
+    receiveUserName: (userName: string) => ({ type: 'RECEIVE_USER', userName: userName } as ReceiveUserNameAction)
 }
 
-const unloadedState: TriviaHomeState = { isLoading: false, trivia: [] }
+const unloadedState: TriviaHomeState = { isLoading: false, trivia: [], userName: "" }
 
 export const reducer: Reducer<TriviaHomeState> = (state: TriviaHomeState | undefined, incomingAction: Action): TriviaHomeState => {
     if (state === undefined) {
@@ -53,13 +60,21 @@ export const reducer: Reducer<TriviaHomeState> = (state: TriviaHomeState | undef
         case 'REQUEST_TRIVIA':
             return {
                 isLoading: true,
-                trivia: state.trivia
+                trivia: state.trivia,
+                userName: state.userName
             };
         case 'RECEIVE_TRIVIA':
             return {
                 isLoading: false,
-                trivia: action.trivia
+                trivia: action.trivia,
+                userName: state.userName
             };
+        case 'RECEIVE_USER':
+            return {
+                isLoading: true,
+                trivia: state.trivia,
+                userName: action.userName
+            }
         default:
             return state;
     }

@@ -51,13 +51,13 @@ var TriviaQuestions = /** @class */ (function (_super) {
         var category = this.props.match.params.category;
         this.props.requestTriviaQuestions(category);
     };
-    TriviaQuestions.prototype.nextQuestion = function () {
-        this.props.requestNextTriviaQuestion();
+    TriviaQuestions.prototype.nextQuestion = function (isCorrect) {
+        this.props.requestNextTriviaQuestion(isCorrect);
     };
     TriviaQuestions.prototype.renderOptions = function (option) {
         var _this = this;
         return (React.createElement(reactstrap_1.Col, { md: "6", className: "d-flex my-3" },
-            React.createElement(reactstrap_1.Button, { className: "mx-auto w-50", onClick: function () { return _this.nextQuestion(); } }, option.option)));
+            React.createElement(reactstrap_1.Button, { className: "mx-auto w-50", onClick: function () { return _this.nextQuestion(option.isCorrect); } }, option.option)));
     };
     return TriviaQuestions;
 }(React.PureComponent));

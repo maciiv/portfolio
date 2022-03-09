@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Portfolio.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,6 +37,26 @@ namespace Portfolio.Controllers
             var data = await GetTriviaAsync();
             var trivia = data.FirstOrDefault(c => c.Category == category);
             return trivia?.Questions;
+        }
+
+        public async Task<IEnumerable<TriviaWinner>> GetTriviaWinnersAsync()
+        {
+            var file = new StreamReader("./data/triviaWinners.json");
+            var json = await file.ReadToEndAsync();
+            file.Close();
+            return JsonConvert.DeserializeObject<IEnumerable<TriviaWinner>>(json);
+        }
+
+        [HttpPost]
+        [Route("winners")]
+        public async Task<IEnumerable<TriviaWinner>> UpdateTriviaWinnersAsync([FromBody] TriviaWinner winner)
+        {
+            var data = await GetTriviaWinnersAsync();
+            var allData = data.Append(winner);
+            var top = data.OrderByDescending(c => c.Score).Take(5);
+
+            await System.IO.File.WriteAllTextAsync("./data/triviaWinners.json", JsonConvert.SerializeObject(top));
+            return top;
         }
     }
 }
