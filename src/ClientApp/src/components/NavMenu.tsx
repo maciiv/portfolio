@@ -15,7 +15,7 @@ export default class NavMenu extends React.PureComponent<{}, { isOpen: boolean }
                     <NavbarBrand tag={Link} to="/" className="logo">
                         <img src="../assets/img/logo.png" className="img-fluid" />
                     </NavbarBrand>
-                    <Navbar id="navbar" className="navbar">                       
+                    <Navbar id="navbar" className="navbar">
                         <i onClick={this.toggle} className="bi mobile-nav-toggle bi-list"></i>
                         <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={this.state.isOpen} navbar>
                             <ul>

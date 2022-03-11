@@ -18,7 +18,7 @@ exports.actionCreators = {
         dispatch({ type: 'NEXT_TRIVIA_QUESTION', currentQuestionIndex: appState.triviaQuestions.currentQuestionIndex + 1, score: isCorrect ? appState.triviaQuestions.score + 1 : appState.triviaQuestions.score });
     }; }
 };
-var unloadedState = { isLoading: false, questions: [], currentQuestionIndex: 0, startTime: new Date(), score: 0 };
+var unloadedState = { isLoading: false, questions: [], currentQuestionIndex: 0, score: 0 };
 var reducer = function (state, incomingAction) {
     if (state === undefined) {
         return unloadedState;
@@ -30,7 +30,6 @@ var reducer = function (state, incomingAction) {
                 isLoading: true,
                 questions: state.questions,
                 currentQuestionIndex: state.currentQuestionIndex,
-                startTime: state.startTime,
                 score: state.score
             };
         case 'RECEIVE_TRIVIA_QUESTIONS':
@@ -38,7 +37,6 @@ var reducer = function (state, incomingAction) {
                 isLoading: false,
                 questions: action.questions,
                 currentQuestionIndex: action.currentQuestionIndex,
-                startTime: action.startTime,
                 score: state.score
             };
         case 'NEXT_TRIVIA_QUESTION':
@@ -46,7 +44,6 @@ var reducer = function (state, incomingAction) {
                 isLoading: false,
                 questions: state.questions,
                 currentQuestionIndex: action.currentQuestionIndex,
-                startTime: state.startTime,
                 score: action.score
             };
         default:

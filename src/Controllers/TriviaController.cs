@@ -53,7 +53,7 @@ namespace Portfolio.Controllers
         {
             var data = await GetTriviaWinnersAsync();
             var allData = data.Append(winner);
-            var top = data.OrderByDescending(c => c.Score).Take(5);
+            var top = allData.OrderByDescending(c => c.Score).Take(5);
 
             await System.IO.File.WriteAllTextAsync("./data/triviaWinners.json", JsonConvert.SerializeObject(top));
             return top;

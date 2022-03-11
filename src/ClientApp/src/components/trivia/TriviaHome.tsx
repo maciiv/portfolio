@@ -37,7 +37,7 @@ class TriviaHome extends React.PureComponent<TriviaHomeProps> {
     }
 
     private ensureDataFetched() {
-        this.props.requestTrivia();
+        this.props.requestTrivia();       
     }
 
     private setUserName(e) {

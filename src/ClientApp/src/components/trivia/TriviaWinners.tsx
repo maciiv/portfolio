@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 import { Col, Container, Row, Table } from 'reactstrap';
 import { ApplicationState } from '../../store';
 import * as TriviaWinnersStore from '../../store/TriviaWinners';
-import * as TimerStore from '../../store/Timer';
 
 type TriviaWinnersProps =
     TriviaWinnersStore.TriviaWinnersState
-    & typeof TriviaWinnersStore.actionCreators
-    & typeof TimerStore.actionCreators;
+    & typeof TriviaWinnersStore.actionCreators;
 
 class TriviaWinners extends React.PureComponent<TriviaWinnersProps> {
     public componentDidMount() {
@@ -20,11 +18,17 @@ class TriviaWinners extends React.PureComponent<TriviaWinnersProps> {
             <React.Fragment>
                 <Container>
                     <Row className="my-3">
-                        <Col md="12" className="d-flex my-5">
-                            <h4>You completed the trivia in {this.props.totalMinutes} minutes and {this.props.totalSeconds} seconds</h4>
+                        <Col md="12" className="d-flex">
+                            <h3>You completed the trivia in {this.props.totalMinutes} minutes and {this.props.totalSeconds} seconds</h3>
                         </Col>
                         <Col md="12" className="mt-5">
                             <Table hover>
+                                <thead>
+                                    <tr>
+                                        <td>User name</td>
+                                        <td>Score</td>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     {this.props.winners.map((winners: TriviaWinnersStore.TriviaWinners) =>
                                         <tr>
@@ -35,6 +39,9 @@ class TriviaWinners extends React.PureComponent<TriviaWinnersProps> {
                                 </tbody>
                             </Table>
                         </Col>
+                        <Col md="12" className="d-flex mt-5">
+                            <a href="/webapps/trivia" className="btn btn-primary btn-block w-25 mx-auto">Go back to trivia home</a>
+                        </Col>
                     </Row>                   
                 </Container>
             </React.Fragment>
@@ -43,7 +50,6 @@ class TriviaWinners extends React.PureComponent<TriviaWinnersProps> {
 
     private ensureDataFetched() {
         this.props.finishTrivia();
-        this.props.stopTimer();
     }
 };
 

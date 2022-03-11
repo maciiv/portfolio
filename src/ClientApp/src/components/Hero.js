@@ -52,13 +52,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var react_redux_1 = require("react-redux");
 var reactstrap_1 = require("reactstrap");
-var HeroStore = require("../store/Hero");
 var Hero = /** @class */ (function (_super) {
     __extends(Hero, _super);
     function Hero() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {
+            text: "",
+            isDone: false
+        };
+        return _this;
     }
     Hero.prototype.componentDidMount = function () {
         this.startHero();
@@ -70,8 +73,8 @@ var Hero = /** @class */ (function (_super) {
                     React.createElement("div", { className: "hero-content" },
                         React.createElement("h1", null,
                             "I'm ",
-                            React.createElement("span", { className: "typed" }, this.props.text),
-                            !this.props.isDone ? React.createElement("span", { className: "typed-cursor" }) : ""),
+                            React.createElement("span", { className: "typed" }, this.state.text),
+                            !this.state.isDone ? React.createElement("span", { className: "typed-cursor" }) : ""),
                         React.createElement("p", null, "Researcher, Designer, Developer, Freelancer"),
                         React.createElement("ul", { className: "list-unstyled list-social" },
                             React.createElement("li", null,
@@ -93,37 +96,37 @@ var Hero = /** @class */ (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.props.writeHero("Miguel Canizares")];
+                    case 0: return [4 /*yield*/, this.writeHero("Miguel Canizares")];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.props.deleteHero()];
+                        return [4 /*yield*/, this.deleteHero()];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.props.writeHero("A Researcher")];
+                        return [4 /*yield*/, this.writeHero("A Researcher")];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, this.props.deleteHero()];
+                        return [4 /*yield*/, this.deleteHero()];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.props.writeHero("A Designer")];
+                        return [4 /*yield*/, this.writeHero("A Designer")];
                     case 5:
                         _a.sent();
-                        return [4 /*yield*/, this.props.deleteHero()];
+                        return [4 /*yield*/, this.deleteHero()];
                     case 6:
                         _a.sent();
-                        return [4 /*yield*/, this.props.writeHero("A Developer")];
+                        return [4 /*yield*/, this.writeHero("A Developer")];
                     case 7:
                         _a.sent();
-                        return [4 /*yield*/, this.props.deleteHero()];
+                        return [4 /*yield*/, this.deleteHero()];
                     case 8:
                         _a.sent();
-                        return [4 /*yield*/, this.props.writeHero("A Freelancer")];
+                        return [4 /*yield*/, this.writeHero("A Freelancer")];
                     case 9:
                         _a.sent();
-                        return [4 /*yield*/, this.props.deleteHero()];
+                        return [4 /*yield*/, this.deleteHero()];
                     case 10:
                         _a.sent();
-                        return [4 /*yield*/, this.props.writeHero("Miguel Canizares", true)];
+                        return [4 /*yield*/, this.writeHero("Miguel Canizares", true)];
                     case 11:
                         _a.sent();
                         return [2 /*return*/];
@@ -131,8 +134,61 @@ var Hero = /** @class */ (function (_super) {
             });
         });
     };
+    Hero.prototype.writeHero = function (text, isDone) {
+        return __awaiter(this, void 0, void 0, function () {
+            var letters, i, currentText;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 500); })];
+                    case 1:
+                        _a.sent();
+                        letters = text.split('');
+                        i = 0;
+                        _a.label = 2;
+                    case 2:
+                        if (!(i < letters.length)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 100); })];
+                    case 3:
+                        _a.sent();
+                        currentText = this.state.text;
+                        this.setState({ text: currentText.concat(letters[i]) });
+                        i++;
+                        return [3 /*break*/, 2];
+                    case 4:
+                        if (isDone) {
+                            this.setState({ isDone: true });
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Hero.prototype.deleteHero = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var letters, i;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 3000); })];
+                    case 1:
+                        _a.sent();
+                        letters = this.state.text;
+                        i = letters.length;
+                        _a.label = 2;
+                    case 2:
+                        if (!(i >= 0)) return [3 /*break*/, 4];
+                        return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 100); })];
+                    case 3:
+                        _a.sent();
+                        this.setState({ text: letters.substr(0, i) });
+                        i--;
+                        return [3 /*break*/, 2];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
     return Hero;
 }(React.PureComponent));
+exports.default = Hero;
 ;
-exports.default = (0, react_redux_1.connect)(function (state) { return state.hero; }, HeroStore.actionCreators)(Hero);
 //# sourceMappingURL=Hero.js.map

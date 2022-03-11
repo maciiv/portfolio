@@ -31,8 +31,8 @@ var TriviaWinners = /** @class */ (function (_super) {
         return (React.createElement(React.Fragment, null,
             React.createElement(reactstrap_1.Container, null,
                 React.createElement(reactstrap_1.Row, { className: "my-3" },
-                    React.createElement(reactstrap_1.Col, { md: "12", className: "d-flex my-5" },
-                        React.createElement("h4", null,
+                    React.createElement(reactstrap_1.Col, { md: "12", className: "d-flex" },
+                        React.createElement("h3", null,
                             "You completed the trivia in ",
                             this.props.totalMinutes,
                             " minutes and ",
@@ -40,15 +40,20 @@ var TriviaWinners = /** @class */ (function (_super) {
                             " seconds")),
                     React.createElement(reactstrap_1.Col, { md: "12", className: "mt-5" },
                         React.createElement(reactstrap_1.Table, { hover: true },
+                            React.createElement("thead", null,
+                                React.createElement("tr", null,
+                                    React.createElement("td", null, "User name"),
+                                    React.createElement("td", null, "Score"))),
                             React.createElement("tbody", null, this.props.winners.map(function (winners) {
                                 return React.createElement("tr", null,
                                     React.createElement("td", null, winners.user),
                                     React.createElement("td", null, winners.score));
-                            }))))))));
+                            })))),
+                    React.createElement(reactstrap_1.Col, { md: "12", className: "d-flex mt-5" },
+                        React.createElement("a", { href: "/webapps/trivia", className: "btn btn-primary btn-block w-25 mx-auto" }, "Go back to trivia home"))))));
     };
     TriviaWinners.prototype.ensureDataFetched = function () {
         this.props.finishTrivia();
-        this.props.stopTimer();
     };
     return TriviaWinners;
 }(React.PureComponent));

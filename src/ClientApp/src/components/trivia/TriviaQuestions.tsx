@@ -1,6 +1,7 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { ApplicationState } from '../../store';
 import * as TriviaQuestionsStore from '../../store/TriviaQuestions';
@@ -22,7 +23,7 @@ class TriviaQuestions extends React.PureComponent<TriviaQuestionsProps> {
                 <Container>
                     {this.props.currentQuestionIndex < this.props.questions.length ?
                         <Row className="my-5">
-                            <Col md="6" className="d-flex mr-auto">
+                            <Col md="6" className="d-flex md-5">
                                 <h5 className="mr-auto">Question {this.props.currentQuestionIndex + 1} of {this.props.questions.length}</h5>
                             </Col>
                             <Col md="6" className="d-flex mb-5">
@@ -32,7 +33,12 @@ class TriviaQuestions extends React.PureComponent<TriviaQuestionsProps> {
                                 <h3 className="mx-auto">{this.props.questions[this.props.currentQuestionIndex].question}</h3>
                             </Col>
                             {this.props.questions[this.props.currentQuestionIndex].options.map((option: TriviaQuestionsStore.TriviaOptions) => this.renderOptions(option))}
-                        </Row> : ""    
+                        </Row> :
+                        <Row className="my-5">
+                            <Col md="12" className="d-flex">
+                                <Link to={{ pathname: "/webapps/trivia/finish" }} className="btn btn-primary w-25 mx-auto">View your score!</Link>
+                            </Col>
+                        </Row>
                     }
                 </Container>
             </React.Fragment>
@@ -45,7 +51,6 @@ class TriviaQuestions extends React.PureComponent<TriviaQuestionsProps> {
     }
 
     private nextQuestion(isCorrect: boolean) {
-
         this.props.requestNextTriviaQuestion(isCorrect);
     }
 

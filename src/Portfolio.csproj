@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\components\dashboard\Dashboard.tsx" />
     <None Remove="ClientApp\src\components\Footer.tsx" />
     <None Remove="ClientApp\src\components\Hero.tsx" />
     <None Remove="ClientApp\src\components\PortfolioItems.tsx" />
@@ -34,7 +35,6 @@
     <None Remove="ClientApp\src\components\trivia\TriviaHome.tsx" />
     <None Remove="ClientApp\src\components\trivia\TriviaQuestions.tsx" />
     <None Remove="ClientApp\src\components\trivia\TriviaWinners.tsx" />
-    <None Remove="ClientApp\src\store\Hero.ts" />
     <None Remove="ClientApp\src\store\PortfolioItems.ts" />
     <None Remove="ClientApp\src\store\Scheduler.ts" />
     <None Remove="ClientApp\src\store\Timer.ts" />

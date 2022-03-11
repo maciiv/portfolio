@@ -1,14 +1,12 @@
 ﻿import * as React from 'react';
-import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
-import { ApplicationState } from '../store';
-import * as HeroStore from '../store/Hero';
 
-type HeroProps =
-    HeroStore.HeroState
-    & typeof HeroStore.actionCreators
+export default class Hero extends React.PureComponent<{}, { text: string, isDone: boolean }> {
+    public state = {
+        text: "",
+        isDone: false
+    }
 
-class Hero extends React.PureComponent<HeroProps> {
     public componentDidMount() {
         this.startHero();
     }
@@ -19,7 +17,7 @@ class Hero extends React.PureComponent<HeroProps> {
                 <div id="hero" className="home">
                     <Container>
                         <div className="hero-content">
-                            <h1>I'm <span className="typed">{this.props.text}</span>{!this.props.isDone ? <span className="typed-cursor"></span> : ""}</h1>
+                            <h1>I'm <span className="typed">{this.state.text}</span>{!this.state.isDone ? <span className="typed-cursor"></span> : ""}</h1>
                             <p>Researcher, Designer, Developer, Freelancer</p>
                             <ul className="list-unstyled list-social">
                                 <li><a href="https://orcid.org/0000-0002-9747-4266"><img style={{ width: 15.31, height: 21.6 }} src="assets/img/orcid-logo-icon.svg" alt="OrcID" /></a></li>
@@ -36,21 +34,42 @@ class Hero extends React.PureComponent<HeroProps> {
     }
 
     private async startHero() {
-        await this.props.writeHero("Miguel Canizares");
-        await this.props.deleteHero();
-        await this.props.writeHero("A Researcher");
-        await this.props.deleteHero();
-        await this.props.writeHero("A Designer");
-        await this.props.deleteHero();
-        await this.props.writeHero("A Developer");
-        await this.props.deleteHero();
-        await this.props.writeHero("A Freelancer");
-        await this.props.deleteHero();
-        await this.props.writeHero("Miguel Canizares", true);
+        await this.writeHero("Miguel Canizares");
+        await this.deleteHero();
+        await this.writeHero("A Researcher");
+        await this.deleteHero();
+        await this.writeHero("A Designer");
+        await this.deleteHero();
+        await this.writeHero("A Developer");
+        await this.deleteHero();
+        await this.writeHero("A Freelancer");
+        await this.deleteHero();
+        await this.writeHero("Miguel Canizares", true);
+    }
+
+    private async writeHero(text: string, isDone?: boolean) {
+        await new Promise(r => setTimeout(r, 500));
+        let letters = text.split('');
+        let i = 0;
+        while (i < letters.length) {
+            await new Promise(r => setTimeout(r, 100));
+            let currentText = this.state.text;
+            this.setState({ text: currentText.concat(letters[i]) });
+            i++
+        }
+        if (isDone) {
+            this.setState({ isDone: true });
+        }
+    }
+
+    private async deleteHero() {
+        await new Promise(r => setTimeout(r, 3000));
+        let letters = this.state.text;
+        let i = letters.length;
+        while (i >= 0) {
+            await new Promise(r => setTimeout(r, 100));
+            this.setState({ text: letters.substr(0, i) })
+            i--
+        }
     }
 };
-
-export default connect(
-    (state: ApplicationState) => state.hero,
-    HeroStore.actionCreators
-)(Hero as any);

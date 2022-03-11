@@ -39,7 +39,6 @@ export const actionCreators = {
                 .then(data => {
                     dispatch({ type: 'RECEIVE_TRIVIA_WINNERS', winners: data, totalMinutes: appState.timer.minutes, totalSeconds: appState.timer.seconds });
                 });
-
             dispatch({ type: 'REQUEST_TRIVIA_WINNERS' });
         }
     }

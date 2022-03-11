@@ -5,7 +5,6 @@ export interface TriviaQuestionsState {
     isLoading: boolean,
     questions: TriviaQuestions[],
     currentQuestionIndex: number,
-    startTime: Date,
     score: number
 }
 
@@ -61,7 +60,7 @@ export const actionCreators = {
     }
 }
 
-const unloadedState: TriviaQuestionsState = { isLoading: false, questions: [], currentQuestionIndex: 0 , startTime: new Date(), score: 0 };
+const unloadedState: TriviaQuestionsState = { isLoading: false, questions: [], currentQuestionIndex: 0 , score: 0 };
 
 export const reducer: Reducer<TriviaQuestionsState> = (state: TriviaQuestionsState | undefined, incomingAction: Action): TriviaQuestionsState => {
     if (state === undefined) {
@@ -75,7 +74,6 @@ export const reducer: Reducer<TriviaQuestionsState> = (state: TriviaQuestionsSta
                 isLoading: true,
                 questions: state.questions,
                 currentQuestionIndex: state.currentQuestionIndex,
-                startTime: state.startTime,
                 score: state.score
             };
         case 'RECEIVE_TRIVIA_QUESTIONS':
@@ -83,7 +81,6 @@ export const reducer: Reducer<TriviaQuestionsState> = (state: TriviaQuestionsSta
                 isLoading: false,
                 questions: action.questions,
                 currentQuestionIndex: action.currentQuestionIndex,
-                startTime: action.startTime,
                 score: state.score
             };
         case 'NEXT_TRIVIA_QUESTION':
@@ -91,7 +88,6 @@ export const reducer: Reducer<TriviaQuestionsState> = (state: TriviaQuestionsSta
                 isLoading: false,
                 questions: state.questions,
                 currentQuestionIndex: action.currentQuestionIndex,
-                startTime: state.startTime,
                 score: action.score
             };
         default:

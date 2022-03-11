@@ -4,7 +4,6 @@ exports.reducers = void 0;
 var WeatherForecasts = require("./WeatherForecasts");
 var Counter = require("./Counter");
 var Scheduler = require("./Scheduler");
-var Hero = require("./Hero");
 var PortfolioItems = require("./PortfolioItems");
 var TriviaHome = require("./TriviaHome");
 var TriviaQuestions = require("./TriviaQuestions");
@@ -17,7 +16,6 @@ exports.reducers = {
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
     scheduler: Scheduler.reducer,
-    hero: Hero.reducer,
     portfolioItems: PortfolioItems.reducer,
     triviaHome: TriviaHome.reducer,
     triviaQuestions: TriviaQuestions.reducer,

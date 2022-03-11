@@ -1,7 +1,6 @@
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
 import * as Scheduler from './Scheduler';
-import * as Hero from './Hero';
 import * as PortfolioItems from './PortfolioItems';
 import * as TriviaHome from './TriviaHome';
 import * as TriviaQuestions from './TriviaQuestions';
@@ -13,7 +12,6 @@ export interface ApplicationState {
     counter: Counter.CounterState | undefined;
     weatherForecasts: WeatherForecasts.WeatherForecastsState | undefined;
     scheduler: Scheduler.SchedulerState | undefined;
-    hero: Hero.HeroState | undefined;
     portfolioItems: PortfolioItems.PortfolioItemsState | undefined;
     triviaHome: TriviaHome.TriviaHomeState | undefined;
     triviaQuestions: TriviaQuestions.TriviaQuestionsState | undefined;
@@ -28,7 +26,6 @@ export const reducers = {
     counter: Counter.reducer,
     weatherForecasts: WeatherForecasts.reducer,
     scheduler: Scheduler.reducer,
-    hero: Hero.reducer,
     portfolioItems: PortfolioItems.reducer,
     triviaHome: TriviaHome.reducer,
     triviaQuestions: TriviaQuestions.reducer,
