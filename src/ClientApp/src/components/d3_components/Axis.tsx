@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import * as d3 from 'd3';
 
 export type AxisProps =
-    RouteComponentProps<{}, {}, { type: string, translateX: number, translateY: number, scale: d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never> | d3.ScaleBand<string> }>;
+    RouteComponentProps<{}, {}, { type: string, translateX: number, translateY: number, ticks: number, scale: d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never> | d3.ScaleBand<string> }>;
 
 export default class Axis extends React.PureComponent<AxisProps> {
     ref = React.createRef<SVGGElement>();
@@ -14,8 +14,8 @@ export default class Axis extends React.PureComponent<AxisProps> {
 
     private renderAxis() {
         const axis = this.props.location.state.type == "left" ?
-            d3.axisLeft<d3.NumberValue | Date | string>(this.props.location.state.scale) :
-            d3.axisBottom<d3.NumberValue | Date | string>(this.props.location.state.scale);
+            d3.axisLeft<d3.NumberValue | Date | string>(this.props.location.state.scale).ticks(this.props.location.state.ticks) :
+            d3.axisBottom<d3.NumberValue | Date | string>(this.props.location.state.scale).ticks(this.props.location.state.ticks);
         const axisG = d3.select(this.ref.current);
         axisG.transition()
             .duration(750)

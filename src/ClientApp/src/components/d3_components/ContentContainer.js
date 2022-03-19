@@ -16,31 +16,20 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var d3 = require("d3");
-var Axis = /** @class */ (function (_super) {
-    __extends(Axis, _super);
-    function Axis() {
+var ContentContainer = /** @class */ (function (_super) {
+    __extends(ContentContainer, _super);
+    function ContentContainer() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.ref = React.createRef();
         return _this;
     }
-    Axis.prototype.componentDidMount = function () {
-        this.renderAxis();
+    ContentContainer.prototype.render = function () {
+        return (React.createElement("g", { transform: "translate(".concat(this.props.location.state.translateX, ", ").concat(this.props.location.state.translateY, ")"), clipPath: "url(#".concat(this.ref, ")") },
+            React.createElement("rect", { className: "zoom", width: this.props.location.state.width, height: this.props.location.state.height }),
+            React.createElement("clipPath", { ref: this.ref },
+                React.createElement("rect", { x: "1", width: this.props.location.state.width, height: this.props.location.state.height }))));
     };
-    Axis.prototype.renderAxis = function () {
-        var axis = this.props.location.state.type == "left" ?
-            d3.axisLeft(this.props.location.state.scale).ticks(this.props.location.state.ticks) :
-            d3.axisBottom(this.props.location.state.scale).ticks(this.props.location.state.ticks);
-        var axisG = d3.select(this.ref.current);
-        axisG.transition()
-            .duration(750)
-            .ease(d3.easeLinear)
-            .call(axis);
-    };
-    Axis.prototype.render = function () {
-        return (React.createElement("g", { ref: this.ref, transform: "translate(".concat(this.props.location.state.translateX, ", ").concat(this.props.location.state.translateY, ")") }));
-    };
-    return Axis;
+    return ContentContainer;
 }(React.PureComponent));
-exports.default = Axis;
-//# sourceMappingURL=Axis.js.map
+exports.default = ContentContainer;
+//# sourceMappingURL=ContentContainer.js.map
