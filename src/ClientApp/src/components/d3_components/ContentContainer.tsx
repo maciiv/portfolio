@@ -14,6 +14,7 @@ export default class ContentContainer extends React.PureComponent<ContentContain
                 <clipPath ref={this.ref}>
                     <rect x="1" width={this.props.location.state.width} height={this.props.location.state.height} />
                 </clipPath>
+                {this.props.children}
             </g>
         )
     }
