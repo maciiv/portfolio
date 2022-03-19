@@ -10,6 +10,7 @@ var Scheduler_1 = require("./components/scheduler/Scheduler");
 var TriviaHome_1 = require("./components/trivia/TriviaHome");
 var TriviaQuestions_1 = require("./components/trivia/TriviaQuestions");
 var TriviaWinners_1 = require("./components/trivia/TriviaWinners");
+var CovidDashboard_1 = require("./components/covid/CovidDashboard");
 require("./assets/css/custom.css");
 exports.default = (function () { return (React.createElement(Layout_1.default, null,
     React.createElement(react_router_1.Route, { exact: true, path: '/', component: Home_1.default }),
@@ -17,6 +18,7 @@ exports.default = (function () { return (React.createElement(Layout_1.default, n
     React.createElement(react_router_1.Route, { path: '/fetch-data/:startDateIndex?', component: FetchData_1.default }),
     React.createElement(react_router_1.Route, { path: '/webapps/scheduler', component: Scheduler_1.default }),
     React.createElement(react_router_1.Route, { exact: true, path: '/webapps/trivia', component: TriviaHome_1.default }),
-    React.createElement(react_router_1.Route, { exact: true, path: '/webapps/trivia/questions/:category?', component: TriviaQuestions_1.default }),
-    React.createElement(react_router_1.Route, { exact: true, path: '/webapps/trivia/finish', component: TriviaWinners_1.default }))); });
+    React.createElement(react_router_1.Route, { exact: true, path: '/webapps/trivia/questions', component: TriviaQuestions_1.default }),
+    React.createElement(react_router_1.Route, { exact: true, path: '/webapps/trivia/finish', component: TriviaWinners_1.default }),
+    React.createElement(react_router_1.Route, { exact: true, patc: '/visualisations/covid-dashboard', component: CovidDashboard_1.default }))); });
 //# sourceMappingURL=App.js.map

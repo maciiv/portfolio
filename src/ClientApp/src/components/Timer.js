@@ -16,29 +16,58 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
-var react_redux_1 = require("react-redux");
-var TimerStore = require("../store/Timer");
 var Timer = /** @class */ (function (_super) {
     __extends(Timer, _super);
     function Timer() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {
+            isActive: false,
+            time: { minutes: 0, seconds: 0 },
+        };
+        return _this;
     }
     Timer.prototype.componentDidMount = function () {
-        this.props.startTimer();
+        this.startTimer();
     };
     Timer.prototype.componentWillUnmount = function () {
-        this.props.stopTimer();
+        if (this.props.location !== undefined) {
+            this.props.location.state.time({ minutes: this.state.time.minutes, seconds: this.state.time.seconds });
+        }
+        this.stopTimer();
     };
     Timer.prototype.render = function () {
         return (React.createElement(React.Fragment, null,
-            this.props.minutes < 10 ? "0" : "",
-            this.props.minutes,
+            this.state.time.minutes < 10 ? "0" : "",
+            this.state.time.minutes,
             ":",
-            this.props.seconds < 10 ? "0" : "",
-            this.props.seconds));
+            this.state.time.seconds < 10 ? "0" : "",
+            this.state.time.seconds));
+    };
+    Timer.prototype.startTimer = function () {
+        var _this = this;
+        var seconds = this.state.time.seconds;
+        var minutes = this.state.time.minutes;
+        this.timerInterval = setInterval(function () {
+            seconds += 1;
+            if (seconds == 60) {
+                minutes = +1;
+                seconds = 0;
+            }
+            _this.setState({
+                isActive: true,
+                time: { minutes: minutes, seconds: seconds }
+            });
+        }, 1000);
+    };
+    Timer.prototype.stopTimer = function () {
+        clearInterval(this.timerInterval);
+        this.setState({
+            isActive: false,
+            time: { minutes: 0, seconds: 0 }
+        });
     };
     return Timer;
 }(React.PureComponent));
+exports.default = Timer;
 ;
-exports.default = (0, react_redux_1.connect)(function (state) { return state.timer; }, TimerStore.actionCreators)(Timer);
 //# sourceMappingURL=Timer.js.map

@@ -1547,3 +1547,9 @@ blockquote {
         margin-right: 0;
     }
 }
+
+/* Visualisations */
+
+.zoom {
+    fill: none;
+}

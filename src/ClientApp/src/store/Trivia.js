@@ -4,7 +4,7 @@ exports.reducer = exports.actionCreators = void 0;
 exports.actionCreators = {
     requestTrivia: function () { return function (dispatch, getState) {
         var appState = getState();
-        if (appState.triviaHome !== undefined && appState.triviaHome.trivia.length === 0) {
+        if (appState.trivia !== undefined && appState.trivia.trivia.length === 0) {
             fetch("trivia")
                 .then(function (response) { return response.json(); })
                 .then(function (data) {
@@ -12,10 +12,9 @@ exports.actionCreators = {
             });
             dispatch({ type: 'REQUEST_TRIVIA' });
         }
-    }; },
-    receiveUserName: function (userName) { return ({ type: 'RECEIVE_USER', userName: userName }); }
+    }; }
 };
-var unloadedState = { isLoading: false, trivia: [], userName: "" };
+var unloadedState = { isLoading: false, trivia: [] };
 var reducer = function (state, incomingAction) {
     if (state === undefined) {
         return unloadedState;
@@ -25,24 +24,16 @@ var reducer = function (state, incomingAction) {
         case 'REQUEST_TRIVIA':
             return {
                 isLoading: true,
-                trivia: state.trivia,
-                userName: state.userName
+                trivia: state.trivia
             };
         case 'RECEIVE_TRIVIA':
             return {
                 isLoading: false,
-                trivia: action.trivia,
-                userName: state.userName
-            };
-        case 'RECEIVE_USER':
-            return {
-                isLoading: true,
-                trivia: state.trivia,
-                userName: action.userName
+                trivia: action.trivia
             };
         default:
             return state;
     }
 };
 exports.reducer = reducer;
-//# sourceMappingURL=TriviaHome.js.map
+//# sourceMappingURL=Trivia.js.map

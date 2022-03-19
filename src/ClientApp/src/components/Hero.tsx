@@ -1,14 +1,26 @@
 ﻿import * as React from 'react';
 import { Container } from 'reactstrap';
+import * as CustomMethods from '../assets/js/CustomMethods';
 
 export default class Hero extends React.PureComponent<{}, { text: string, isDone: boolean }> {
+    writeTimeout: number
+    deleteTimeout: number
+    letterPromise: CustomMethods.ICancelablePromise<void>
+    startHeroPromise: CustomMethods.ICancelablePromise<void>
+
     public state = {
         text: "",
         isDone: false
     }
 
     public componentDidMount() {
-        this.startHero();
+        this.writeHero("Miguel Canizares");
+    }
+
+    public componentWillUnmount() {
+        this.letterPromise.cancel();
+        clearTimeout(this.writeTimeout)
+        clearTimeout(this.deleteTimeout);
     }
 
     public render() {
@@ -48,28 +60,37 @@ export default class Hero extends React.PureComponent<{}, { text: string, isDone
     }
 
     private async writeHero(text: string, isDone?: boolean) {
-        await new Promise(r => setTimeout(r, 500));
-        let letters = text.split('');
-        let i = 0;
-        while (i < letters.length) {
-            await new Promise(r => setTimeout(r, 100));
-            let currentText = this.state.text;
-            this.setState({ text: currentText.concat(letters[i]) });
-            i++
-        }
-        if (isDone) {
-            this.setState({ isDone: true });
-        }
+        this.writeTimeout = setTimeout( async () => {
+            let letters = text.split('');
+            for (let i = 0; i < text.length; i++) {
+                this.letterPromise = new CustomMethods.CancelablePromise(new Promise(r => setTimeout(r, 100)));
+                await this.letterPromise
+                    .promise
+                    .then(() => {
+                        let currentText = this.state.text;
+                        this.setState({ text: currentText.concat(letters[i]) });
+                    })
+                    .catch(reason => console.log('isCancealed', reason.isCanceled))
+            }
+            if (isDone) {
+                this.setState({ isDone: true });
+            }
+        }, 500)
+        
     }
 
     private async deleteHero() {
-        await new Promise(r => setTimeout(r, 3000));
-        let letters = this.state.text;
-        let i = letters.length;
-        while (i >= 0) {
-            await new Promise(r => setTimeout(r, 100));
-            this.setState({ text: letters.substr(0, i) })
-            i--
-        }
+        this.deleteTimeout = setTimeout( async () => {
+            let letters = this.state.text;
+            for (let i = letters.length; i >= 0; i--) {
+                this.letterPromise = new CustomMethods.CancelablePromise(new Promise(r => setTimeout(r, 100)));
+                await this.letterPromise
+                    .promise
+                    .then(() => {
+                        this.setState({ text: letters.substr(0, i) })
+                    })
+                    .catch(reason => console.log('isCancealed', reason.isCanceled))
+            }
+        }, 3000)
     }
 };

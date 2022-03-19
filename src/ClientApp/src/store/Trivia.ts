@@ -1,10 +1,9 @@
 ﻿import { Action, Reducer } from 'redux';
 import { AppThunkAction } from './';
 
-export interface TriviaHomeState {
+export interface TriviaState {
     isLoading: boolean,
-    trivia: Trivia[],
-    userName: string
+    trivia: Trivia[]
 }
 
 export interface Trivia {
@@ -13,7 +12,18 @@ export interface Trivia {
 }
 
 export interface TriviaQuestions {
-    question: string
+    question: string,
+    options: TriviaOptions[]
+}
+
+export interface TriviaOptions {
+    option: string,
+    isCorrect: boolean
+}
+
+export interface TriviaWinners {
+    user: string,
+    score: number
 }
 
 export interface RequestTriviaAction {
@@ -25,17 +35,12 @@ export interface ReceiveTriviaAction {
     trivia: Trivia[]
 }
 
-export interface ReceiveUserNameAction {
-    type: 'RECEIVE_USER',
-    userName: string
-}
-
-export type KnownAction = RequestTriviaAction | ReceiveTriviaAction | ReceiveUserNameAction;
+export type KnownAction = RequestTriviaAction | ReceiveTriviaAction;
 
 export const actionCreators = {
     requestTrivia: (): AppThunkAction<KnownAction> => (dispatch, getState) => {
         const appState = getState();
-        if (appState.triviaHome !== undefined && appState.triviaHome.trivia.length === 0) {
+        if (appState.trivia !== undefined && appState.trivia.trivia.length === 0) {
             fetch(`trivia`)
                 .then(response => response.json() as Promise<Trivia[]>)
                 .then(data => {
@@ -44,13 +49,12 @@ export const actionCreators = {
 
             dispatch({ type: 'REQUEST_TRIVIA' });
         }
-    },
-    receiveUserName: (userName: string) => ({ type: 'RECEIVE_USER', userName: userName } as ReceiveUserNameAction)
+    }
 }
 
-const unloadedState: TriviaHomeState = { isLoading: false, trivia: [], userName: "" }
+const unloadedState: TriviaState = { isLoading: false, trivia: [] }
 
-export const reducer: Reducer<TriviaHomeState> = (state: TriviaHomeState | undefined, incomingAction: Action): TriviaHomeState => {
+export const reducer: Reducer<TriviaState> = (state: TriviaState | undefined, incomingAction: Action): TriviaState => {
     if (state === undefined) {
         return unloadedState;
     }
@@ -60,21 +64,13 @@ export const reducer: Reducer<TriviaHomeState> = (state: TriviaHomeState | undef
         case 'REQUEST_TRIVIA':
             return {
                 isLoading: true,
-                trivia: state.trivia,
-                userName: state.userName
+                trivia: state.trivia
             };
         case 'RECEIVE_TRIVIA':
             return {
                 isLoading: false,
-                trivia: action.trivia,
-                userName: state.userName
+                trivia: action.trivia
             };
-        case 'RECEIVE_USER':
-            return {
-                isLoading: true,
-                trivia: state.trivia,
-                userName: action.userName
-            }
         default:
             return state;
     }

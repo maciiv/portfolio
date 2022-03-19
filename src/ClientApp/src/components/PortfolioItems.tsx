@@ -1,5 +1,6 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Col, Container, Row } from 'reactstrap';
 import { ApplicationState } from '../store';
 import * as PortfolioItemsStore from '../store/PortfolioItems';
@@ -66,7 +67,7 @@ class PortfolioItems extends React.PureComponent<PortfolioItemsProps> {
                                 </Col>
                                 <Col lg="3" md="4">
                                     <a href={item.gitHubUrl} className="preview-link" title="GitHub page"><i className="bx bxl-github"></i></a>
-                                    <a href={item.itemUrl} className="details-link" title="More details"><i className="bx bx-link"></i></a>
+                                    <Link to={item.itemUrl} className="details-link" title="More details"><i className="bx bx-link"></i></Link>
                                 </Col>
                             </Row>                         
                             <p>{item.description}</p>                           

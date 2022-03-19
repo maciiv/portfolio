@@ -53,6 +53,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var reactstrap_1 = require("reactstrap");
+var CustomMethods = require("../assets/js/CustomMethods");
 var Hero = /** @class */ (function (_super) {
     __extends(Hero, _super);
     function Hero() {
@@ -64,7 +65,12 @@ var Hero = /** @class */ (function (_super) {
         return _this;
     }
     Hero.prototype.componentDidMount = function () {
-        this.startHero();
+        this.writeHero("Miguel Canizares");
+    };
+    Hero.prototype.componentWillUnmount = function () {
+        this.letterPromise.cancel();
+        clearTimeout(this.writeTimeout);
+        clearTimeout(this.deleteTimeout);
     };
     Hero.prototype.render = function () {
         return (React.createElement(React.Fragment, null,
@@ -136,54 +142,102 @@ var Hero = /** @class */ (function (_super) {
     };
     Hero.prototype.writeHero = function (text, isDone) {
         return __awaiter(this, void 0, void 0, function () {
-            var letters, i, currentText;
+            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 500); })];
-                    case 1:
-                        _a.sent();
-                        letters = text.split('');
-                        i = 0;
-                        _a.label = 2;
-                    case 2:
-                        if (!(i < letters.length)) return [3 /*break*/, 4];
-                        return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 100); })];
-                    case 3:
-                        _a.sent();
-                        currentText = this.state.text;
-                        this.setState({ text: currentText.concat(letters[i]) });
-                        i++;
-                        return [3 /*break*/, 2];
-                    case 4:
-                        if (isDone) {
-                            this.setState({ isDone: true });
+                this.writeTimeout = setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
+                    var letters, _loop_1, this_1, i;
+                    var _this = this;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                letters = text.split('');
+                                _loop_1 = function (i) {
+                                    return __generator(this, function (_b) {
+                                        switch (_b.label) {
+                                            case 0:
+                                                this_1.letterPromise = new CustomMethods.CancelablePromise(new Promise(function (r) { return setTimeout(r, 100); }));
+                                                return [4 /*yield*/, this_1.letterPromise
+                                                        .promise
+                                                        .then(function () {
+                                                        var currentText = _this.state.text;
+                                                        _this.setState({ text: currentText.concat(letters[i]) });
+                                                    })
+                                                        .catch(function (reason) { return console.log('isCancealed', reason.isCanceled); })];
+                                            case 1:
+                                                _b.sent();
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                };
+                                this_1 = this;
+                                i = 0;
+                                _a.label = 1;
+                            case 1:
+                                if (!(i < text.length)) return [3 /*break*/, 4];
+                                return [5 /*yield**/, _loop_1(i)];
+                            case 2:
+                                _a.sent();
+                                _a.label = 3;
+                            case 3:
+                                i++;
+                                return [3 /*break*/, 1];
+                            case 4:
+                                if (isDone) {
+                                    this.setState({ isDone: true });
+                                }
+                                return [2 /*return*/];
                         }
-                        return [2 /*return*/];
-                }
+                    });
+                }); }, 500);
+                return [2 /*return*/];
             });
         });
     };
     Hero.prototype.deleteHero = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var letters, i;
+            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 3000); })];
-                    case 1:
-                        _a.sent();
-                        letters = this.state.text;
-                        i = letters.length;
-                        _a.label = 2;
-                    case 2:
-                        if (!(i >= 0)) return [3 /*break*/, 4];
-                        return [4 /*yield*/, new Promise(function (r) { return setTimeout(r, 100); })];
-                    case 3:
-                        _a.sent();
-                        this.setState({ text: letters.substr(0, i) });
-                        i--;
-                        return [3 /*break*/, 2];
-                    case 4: return [2 /*return*/];
-                }
+                this.deleteTimeout = setTimeout(function () { return __awaiter(_this, void 0, void 0, function () {
+                    var letters, _loop_2, this_2, i;
+                    var _this = this;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                letters = this.state.text;
+                                _loop_2 = function (i) {
+                                    return __generator(this, function (_b) {
+                                        switch (_b.label) {
+                                            case 0:
+                                                this_2.letterPromise = new CustomMethods.CancelablePromise(new Promise(function (r) { return setTimeout(r, 100); }));
+                                                return [4 /*yield*/, this_2.letterPromise
+                                                        .promise
+                                                        .then(function () {
+                                                        _this.setState({ text: letters.substr(0, i) });
+                                                    })
+                                                        .catch(function (reason) { return console.log('isCancealed', reason.isCanceled); })];
+                                            case 1:
+                                                _b.sent();
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                };
+                                this_2 = this;
+                                i = letters.length;
+                                _a.label = 1;
+                            case 1:
+                                if (!(i >= 0)) return [3 /*break*/, 4];
+                                return [5 /*yield**/, _loop_2(i)];
+                            case 2:
+                                _a.sent();
+                                _a.label = 3;
+                            case 3:
+                                i--;
+                                return [3 /*break*/, 1];
+                            case 4: return [2 /*return*/];
+                        }
+                    });
+                }); }, 3000);
+                return [2 /*return*/];
             });
         });
     };

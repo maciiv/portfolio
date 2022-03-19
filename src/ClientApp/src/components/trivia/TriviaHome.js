@@ -19,11 +19,15 @@ var React = require("react");
 var react_redux_1 = require("react-redux");
 var react_router_dom_1 = require("react-router-dom");
 var reactstrap_1 = require("reactstrap");
-var TriviaHomeStore = require("../../store/TriviaHome");
+var TriviaStore = require("../../store/Trivia");
 var TriviaHome = /** @class */ (function (_super) {
     __extends(TriviaHome, _super);
     function TriviaHome() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.state = {
+            userName: ""
+        };
+        return _this;
     }
     TriviaHome.prototype.componentDidMount = function () {
         this.ensureDataFetched();
@@ -45,7 +49,9 @@ var TriviaHome = /** @class */ (function (_super) {
         this.props.requestTrivia();
     };
     TriviaHome.prototype.setUserName = function (e) {
-        this.props.receiveUserName(e.target.value);
+        this.setState({
+            userName: e.target.value
+        });
     };
     TriviaHome.prototype.renderCard = function (trivia) {
         return (React.createElement(reactstrap_1.Card, null,
@@ -57,10 +63,10 @@ var TriviaHome = /** @class */ (function (_super) {
                     "? If you think you are a specialist in this category, try answering ",
                     trivia.questions.length,
                     " questions and test yourself"),
-                React.createElement(react_router_dom_1.Link, { to: { pathname: "/webapps/trivia/questions/".concat(trivia.category) }, className: this.props.userName !== undefined && this.props.userName !== "" ? "btn btn-primary" : "btn btn-primary disabled" }, "Select"))));
+                React.createElement(react_router_dom_1.Link, { to: { pathname: "/webapps/trivia/questions", state: { questions: trivia.questions, userName: this.state.userName } }, className: this.state.userName !== undefined && this.state.userName !== "" ? "btn btn-primary" : "btn btn-primary disabled" }, "Select"))));
     };
     return TriviaHome;
 }(React.PureComponent));
 ;
-exports.default = (0, react_redux_1.connect)(function (state) { return state.triviaHome; }, TriviaHomeStore.actionCreators)(TriviaHome);
+exports.default = (0, react_redux_1.connect)(function (state) { return state.trivia; }, TriviaStore.actionCreators)(TriviaHome);
 //# sourceMappingURL=TriviaHome.js.map

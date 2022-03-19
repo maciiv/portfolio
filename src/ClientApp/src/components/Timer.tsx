@@ -1,31 +1,64 @@
 ﻿import * as React from 'react';
-import { connect } from 'react-redux';
-import { ApplicationState } from '../store';
-import * as TimerStore from '../store/Timer';
+import { RouteComponentProps } from 'react-router-dom';
 
-type TimerProps =
-    TimerStore.TimerState
-    & typeof TimerStore.actionCreators;
 
-class Timer extends React.PureComponent<TimerProps> {
-    public componentDidMount() {
-        this.props.startTimer();
+export type TimerProps =
+    RouteComponentProps<{}, {}, { time?: Function }>;
+
+export interface Time {
+    minutes: number,
+    seconds: number
+}
+
+export default class Timer extends React.PureComponent<TimerProps, { isActive: boolean, time: Time }> {
+    timerInterval: number
+    public state = {
+        isActive: false,
+        time: {minutes: 0, seconds: 0} as Time,
     }
 
-    public componentWillUnmount() {
-        this.props.stopTimer();
+    public componentDidMount() {
+        this.startTimer();
+    }
+
+    public compo
+
+    public componentWillUnmount() {       
+        if (this.props.location !== undefined) {
+            this.props.location.state.time({ minutes: this.state.time.minutes, seconds: this.state.time.seconds });
+        }
+        this.stopTimer();
     }
 
     public render() {
         return (
             <React.Fragment>
-                {this.props.minutes < 10 ? "0" : ""}{this.props.minutes}:{this.props.seconds < 10 ? "0" : ""}{this.props.seconds}
+                {this.state.time.minutes < 10 ? "0" : ""}{this.state.time.minutes}:{this.state.time.seconds < 10 ? "0" : ""}{this.state.time.seconds}
             </React.Fragment>
         );
     }
-};
 
-export default connect(
-    (state: ApplicationState) => state.timer,
-    TimerStore.actionCreators
-)(Timer as any);
+    private startTimer() {
+        let seconds = this.state.time.seconds;
+        let minutes = this.state.time.minutes;
+        this.timerInterval = setInterval(() => {
+            seconds += 1;
+            if (seconds == 60) {
+                minutes = + 1;
+                seconds = 0;
+            }
+            this.setState({
+                isActive: true,
+                time: { minutes: minutes, seconds: seconds } as Time
+            })
+        }, 1000);
+    }
+
+    private stopTimer() {
+        clearInterval(this.timerInterval);
+        this.setState({
+            isActive: false,
+            time: { minutes: 0, seconds: 0 } as Time
+        })
+    }
+};

@@ -1,10 +1,10 @@
 [
   {
     "name": "Bar chart",
-    "description": "A traditional bar chart with interactive properties",
+    "description": "A world wide COVID-19 dashboard",
     "imageUrl": "assets/img/portfolio/portfolio-1.jpg",
     "gitHubUrl": "",
-    "itemUrl": "visualisations/bar",
+    "itemUrl": "visualisations/covid-dashboard",
     "filter": "visualisation"
   },
   {

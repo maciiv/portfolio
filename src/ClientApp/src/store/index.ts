@@ -2,10 +2,8 @@ import * as WeatherForecasts from './WeatherForecasts';
 import * as Counter from './Counter';
 import * as Scheduler from './Scheduler';
 import * as PortfolioItems from './PortfolioItems';
-import * as TriviaHome from './TriviaHome';
-import * as TriviaQuestions from './TriviaQuestions';
-import * as TriviaWinners from './TriviaWinners';
-import * as Timer from './Timer';
+import * as Trivia from './Trivia';
+import * as Covid from './Covid';
 
 // The top-level state object
 export interface ApplicationState {
@@ -13,10 +11,8 @@ export interface ApplicationState {
     weatherForecasts: WeatherForecasts.WeatherForecastsState | undefined;
     scheduler: Scheduler.SchedulerState | undefined;
     portfolioItems: PortfolioItems.PortfolioItemsState | undefined;
-    triviaHome: TriviaHome.TriviaHomeState | undefined;
-    triviaQuestions: TriviaQuestions.TriviaQuestionsState | undefined;
-    triviaWinners: TriviaWinners.TriviaWinnersState | undefined;
-    timer: Timer.TimerState | undefined;
+    trivia: Trivia.TriviaState | undefined;
+    covid: Covid.CovidState | undefined;
 }
 
 // Whenever an action is dispatched, Redux will update each top-level application state property using
@@ -27,10 +23,8 @@ export const reducers = {
     weatherForecasts: WeatherForecasts.reducer,
     scheduler: Scheduler.reducer,
     portfolioItems: PortfolioItems.reducer,
-    triviaHome: TriviaHome.reducer,
-    triviaQuestions: TriviaQuestions.reducer,
-    triviaWinners: TriviaWinners.reducer,
-    timer: Timer.reducer
+    trivia: Trivia.reducer,
+    covid: Covid.reducer
 };
 
 // This type can be used as a hint on action creators so that its 'dispatch' and 'getState' params are

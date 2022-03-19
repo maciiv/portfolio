@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_redux_1 = require("react-redux");
+var react_router_dom_1 = require("react-router-dom");
 var reactstrap_1 = require("reactstrap");
 var PortfolioItemsStore = require("../store/PortfolioItems");
 var PortfolioItems = /** @class */ (function (_super) {
@@ -63,7 +64,7 @@ var PortfolioItems = /** @class */ (function (_super) {
                         React.createElement(reactstrap_1.Col, { lg: "3", md: "4" },
                             React.createElement("a", { href: item.gitHubUrl, className: "preview-link", title: "GitHub page" },
                                 React.createElement("i", { className: "bx bxl-github" })),
-                            React.createElement("a", { href: item.itemUrl, className: "details-link", title: "More details" },
+                            React.createElement(react_router_dom_1.Link, { to: item.itemUrl, className: "details-link", title: "More details" },
                                 React.createElement("i", { className: "bx bx-link" })))),
                     React.createElement("p", null, item.description)));
         })));

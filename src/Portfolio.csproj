@@ -26,7 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\components\dashboard\Dashboard.tsx" />
+    <None Remove="ClientApp\src\assets\js\CustomMethods.ts" />
+    <None Remove="ClientApp\src\components\covid\CovidDashboard.tsx" />
+    <None Remove="ClientApp\src\components\covid\CovidWidget.tsx" />
+    <None Remove="ClientApp\src\components\covid\CovidWorldTimeline.tsx" />
     <None Remove="ClientApp\src\components\Footer.tsx" />
     <None Remove="ClientApp\src\components\Hero.tsx" />
     <None Remove="ClientApp\src\components\PortfolioItems.tsx" />
@@ -35,12 +38,10 @@
     <None Remove="ClientApp\src\components\trivia\TriviaHome.tsx" />
     <None Remove="ClientApp\src\components\trivia\TriviaQuestions.tsx" />
     <None Remove="ClientApp\src\components\trivia\TriviaWinners.tsx" />
+    <None Remove="ClientApp\src\store\Covid.ts" />
     <None Remove="ClientApp\src\store\PortfolioItems.ts" />
     <None Remove="ClientApp\src\store\Scheduler.ts" />
-    <None Remove="ClientApp\src\store\Timer.ts" />
-    <None Remove="ClientApp\src\store\TriviaHome.ts" />
-    <None Remove="ClientApp\src\store\TriviaQuestions.ts" />
-    <None Remove="ClientApp\src\store\TriviaWinners.ts" />
+    <None Remove="ClientApp\src\store\Trivia.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
