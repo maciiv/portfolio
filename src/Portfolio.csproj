@@ -30,6 +30,9 @@
     <None Remove="ClientApp\src\components\covid\CovidDashboard.tsx" />
     <None Remove="ClientApp\src\components\covid\CovidWidget.tsx" />
     <None Remove="ClientApp\src\components\covid\CovidWorldTimeline.tsx" />
+    <None Remove="ClientApp\src\components\d3_components\Axis.tsx" />
+    <None Remove="ClientApp\src\components\d3_components\Circle.tsx" />
+    <None Remove="ClientApp\src\components\d3_components\ContentContainer.tsx" />
     <None Remove="ClientApp\src\components\Footer.tsx" />
     <None Remove="ClientApp\src\components\Hero.tsx" />
     <None Remove="ClientApp\src\components\PortfolioItems.tsx" />

@@ -24,12 +24,12 @@ export class CancelablePromise<T> implements ICancelablePromise<T> {
 export interface Chart {
     width: number;
     height: number;
-    margin: IChartMargin;
+    margin: ChartMargin;
     x: IChartAxis,
     y: IChartAxis
 }
 
-export interface IChartMargin {
+export interface ChartMargin {
     top: number;
     right: number;
     bottom: number;

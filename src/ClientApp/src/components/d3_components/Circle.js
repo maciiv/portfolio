@@ -17,32 +17,28 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var d3 = require("d3");
-var Axis = /** @class */ (function (_super) {
-    __extends(Axis, _super);
-    function Axis() {
+var Circle = /** @class */ (function (_super) {
+    __extends(Circle, _super);
+    function Circle() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.ref = React.createRef();
-        _this.state = {
-            axis: _this.props.location.state.type == "left" ?
-                d3.axisLeft(_this.props.location.state.scale).ticks(_this.props.location.state.ticks) :
-                d3.axisBottom(_this.props.location.state.scale).ticks(_this.props.location.state.ticks)
-        };
         return _this;
     }
-    Axis.prototype.componentDidMount = function () {
-        this.renderAxis();
+    Circle.prototype.componentDidMount = function () {
+        this.renderCircle();
     };
-    Axis.prototype.renderAxis = function () {
+    Circle.prototype.renderCircle = function () {
         d3.select(this.ref.current)
+            .classed("circle", true)
             .transition()
             .duration(750)
-            .ease(d3.easeLinear)
-            .call(this.state.axis);
+            .attr("cx", this.props.location.state.scaleX(this.props.location.state.dataX))
+            .attr("cy", this.props.location.state.scaleY(this.props.location.state.dataY));
     };
-    Axis.prototype.render = function () {
-        return (React.createElement("g", { ref: this.ref, transform: "translate(".concat(this.props.location.state.translateX, ", ").concat(this.props.location.state.translateY, ")") }));
+    Circle.prototype.render = function () {
+        return (React.createElement("circle", { ref: this.ref, cx: 0, cy: 0, r: this.props.location.state.r, fill: this.props.location.state.color, stroke: this.props.location.state.color, style: { "fillOpacity": 0.5 } }));
     };
-    return Axis;
+    return Circle;
 }(React.PureComponent));
-exports.default = Axis;
-//# sourceMappingURL=Axis.js.map
+exports.default = Circle;
+//# sourceMappingURL=Circle.js.map
