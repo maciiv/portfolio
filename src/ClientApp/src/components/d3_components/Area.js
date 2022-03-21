@@ -17,36 +17,34 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var d3 = require("d3");
-var Line = /** @class */ (function (_super) {
-    __extends(Line, _super);
-    function Line() {
+var Area = /** @class */ (function (_super) {
+    __extends(Area, _super);
+    function Area() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.ref = React.createRef();
         _this.state = {
-            d: d3.line()
+            area: d3.area()
                 .x(function (d) { return _this.props.location.state.scaleX(d.x); })
-                .y(function (d) { return _this.props.location.state.scaleY(d.y); })(_this.props.location.state.data)
+                .y1(function (d) { return _this.props.location.state.scaleY(d.y); })
+                .y0(function (d) { return _this.props.location.state.scaleY(0); })(_this.props.location.state.data)
         };
         return _this;
     }
-    Line.prototype.componentDidMount = function () {
-        this.renderLine();
+    Area.prototype.componentDidMount = function () {
+        this.renderArea();
     };
-    Line.prototype.renderLine = function () {
-        var totalLenght = this.ref.current.getTotalLength();
+    Area.prototype.renderArea = function () {
         d3.select(this.ref.current)
-            .classed("line", true)
-            .attr("stroke-dasharray", "".concat(totalLenght, ", ").concat(totalLenght))
-            .attr("stroke-dashoffset", totalLenght)
+            .classed("area", true)
             .transition()
             .duration(750)
             .ease(d3.easeLinear)
-            .attr("stroke-dashoffset", 0);
+            .attr("opacity", 0.25);
     };
-    Line.prototype.render = function () {
-        return (React.createElement("path", { ref: this.ref, d: this.state.d, fill: "none", stroke: this.props.location.state.color }));
+    Area.prototype.render = function () {
+        return (React.createElement("path", { ref: this.ref, d: this.state.area, fill: this.props.location.state.color, opacity: 0 }));
     };
-    return Line;
+    return Area;
 }(React.PureComponent));
-exports.default = Line;
-//# sourceMappingURL=Line.js.map
+exports.default = Area;
+//# sourceMappingURL=Area.js.map

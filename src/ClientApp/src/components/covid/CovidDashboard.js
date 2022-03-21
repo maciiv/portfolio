@@ -44,15 +44,13 @@ var CovidDashboard = /** @class */ (function (_super) {
     CovidDashboard.prototype.render = function () {
         return (React.createElement(React.Fragment, null,
             React.createElement(reactstrap_1.Container, null, this.props.world.length === 0 ? React.createElement(reactstrap_1.Spinner, null) :
-                React.createElement(reactstrap_1.Row, null,
-                    React.createElement(reactstrap_1.Col, { md: "4" },
-                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Cases", number: d3.sum(this.props.world.map(function (c) { return c.cases; })) } } }))),
-                    React.createElement(reactstrap_1.Col, { md: "4" },
-                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Deaths", number: d3.sum(this.props.world.map(function (c) { return c.deaths; })) } } }))),
-                    React.createElement(reactstrap_1.Col, { md: "4" },
-                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Hospitalisations", number: d3.sum(this.props.world.map(function (c) { return c.hosp; })) } } }))),
-                    React.createElement(reactstrap_1.Col, { md: "12" },
-                        React.createElement(CovidWorldTimeline_1.default, __assign({}, { location: { state: { data: this.props.world } } })))))));
+                React.createElement(reactstrap_1.Row, { className: "my-4" },
+                    React.createElement(reactstrap_1.Col, { md: "9" },
+                        React.createElement(CovidWorldTimeline_1.default, __assign({}, { location: { state: { data: this.props.world } } }))),
+                    React.createElement(reactstrap_1.Col, { md: "3" },
+                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Cases", number: d3.sum(this.props.world.map(function (c) { return c.cases; })) } } })),
+                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Deaths", number: d3.sum(this.props.world.map(function (c) { return c.deaths; })) } } })),
+                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Hospitalisations", number: d3.sum(this.props.world.map(function (c) { return c.hosp; })) } } })))))));
     };
     CovidDashboard.prototype.ensureDataFetched = function () {
         this.props.requestCovidWorld();

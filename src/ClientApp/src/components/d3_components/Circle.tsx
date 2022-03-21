@@ -24,15 +24,15 @@ export default class Circle extends React.PureComponent<CircleProps> {
             .classed("circle", true)
             .transition()
             .duration(750)
-            .attr("cx", this.props.location.state.scaleX(this.props.location.state.dataX))
-            .attr("cy", this.props.location.state.scaleY(this.props.location.state.dataY));
+            .attr("cx", this.props.location.state.scaleX(this.props.location.state.dataX) as number)
+            .attr("cy", this.props.location.state.scaleY(this.props.location.state.dataY) as number);
     }
 
     public render() {
         return (
             <circle ref={this.ref}
                 cx={0}
-                cy={0}
+                cy={this.props.location.state.scaleY(0 as number & (number | Date) & string)}
                 r={this.props.location.state.r}
                 fill={this.props.location.state.color}
                 stroke={this.props.location.state.color}

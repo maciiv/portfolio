@@ -36,7 +36,7 @@ var Circle = /** @class */ (function (_super) {
             .attr("cy", this.props.location.state.scaleY(this.props.location.state.dataY));
     };
     Circle.prototype.render = function () {
-        return (React.createElement("circle", { ref: this.ref, cx: 0, cy: 0, r: this.props.location.state.r, fill: this.props.location.state.color, stroke: this.props.location.state.color, style: { "fillOpacity": 0.5 } }));
+        return (React.createElement("circle", { ref: this.ref, cx: 0, cy: this.props.location.state.scaleY(0), r: this.props.location.state.r, fill: this.props.location.state.color, stroke: this.props.location.state.color, style: { "fillOpacity": 0.5 } }));
     };
     return Circle;
 }(React.PureComponent));

@@ -8,15 +8,15 @@ export type AxisProps =
         translateX: number,
         translateY: number,
         ticks: number,
-        scale: d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never> | d3.ScaleBand<string>
+        scale: (d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never>) & d3.ScaleBand<string>
     }>;
 
 export default class Axis extends React.PureComponent<AxisProps, { axis: d3.Axis<d3.AxisDomain> }> {
     ref = React.createRef<SVGGElement>();
     public state = {
         axis: this.props.location.state.type == "left" ?
-            d3.axisLeft<d3.NumberValue | Date | string>(this.props.location.state.scale).ticks(this.props.location.state.ticks) :
-            d3.axisBottom<d3.NumberValue | Date | string>(this.props.location.state.scale).ticks(this.props.location.state.ticks)
+            d3.axisLeft(this.props.location.state.scale).ticks(this.props.location.state.ticks) :
+            d3.axisBottom(this.props.location.state.scale)
     }
 
 

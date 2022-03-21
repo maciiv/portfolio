@@ -2,51 +2,48 @@
 import { RouteComponentProps } from 'react-router-dom';
 import * as d3 from 'd3';
 
-export type LineData = {
+export type AreaData = {
     x: number & (number | Date) & string,
     y: number & (number | Date) & string
 }
 
-export type LineProps =
+export type AreaProps =
     RouteComponentProps<{}, {}, {
-        scaleX: d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never> | d3.ScaleBand<string> ,
+        scaleX: d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never> | d3.ScaleBand<string>,
         scaleY: d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never> | d3.ScaleBand<string>,
-        data: LineData[]
+        data: AreaData[]
         color: string
     }>;
 
-export default class Line extends React.PureComponent<LineProps, { d: string }> {
+export default class Area extends React.PureComponent<AreaProps, { area: string }> {
     ref = React.createRef<SVGPathElement>();
     public state = {
-        d: d3.line<LineData>()
+        area: d3.area<AreaData>()
             .x(d => this.props.location.state.scaleX(d.x) as number)
-            .y(d => this.props.location.state.scaleY(d.y) as number)
+            .y1(d => this.props.location.state.scaleY(d.y) as number)
+            .y0(d => this.props.location.state.scaleY(0 as number & (number | Date) & string) as number)
             (this.props.location.state.data)
     }
 
     public componentDidMount() {
-        this.renderLine();
+        this.renderArea();
     }
 
-    public renderLine() {
-        let totalLenght = this.ref.current.getTotalLength();
-
+    public renderArea() {
         d3.select(this.ref.current)
-            .classed("line", true)
-            .attr("stroke-dasharray", `${totalLenght}, ${totalLenght}`)
-            .attr("stroke-dashoffset", totalLenght)
+            .classed("area", true)
             .transition()
             .duration(750)
             .ease(d3.easeLinear)
-            .attr("stroke-dashoffset", 0);
+            .attr("opacity", 0.25);
     }
 
     public render() {
         return (
             <path ref={this.ref}
-                d={this.state.d}
-                fill="none"
-                stroke={this.props.location.state.color}
+                d={this.state.area}
+                fill={this.props.location.state.color}
+                opacity={0}
             />
         )
     }

@@ -25,7 +25,7 @@ var Axis = /** @class */ (function (_super) {
         _this.state = {
             axis: _this.props.location.state.type == "left" ?
                 d3.axisLeft(_this.props.location.state.scale).ticks(_this.props.location.state.ticks) :
-                d3.axisBottom(_this.props.location.state.scale).ticks(_this.props.location.state.ticks)
+                d3.axisBottom(_this.props.location.state.scale)
         };
         return _this;
     }

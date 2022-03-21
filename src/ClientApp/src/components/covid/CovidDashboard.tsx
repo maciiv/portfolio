@@ -22,11 +22,13 @@ class CovidDashboard extends React.PureComponent<CovidDashboardProps> {
             <React.Fragment>
                 <Container>
                     {this.props.world.length === 0 ? <Spinner /> :
-                        <Row>
-                            <Col md="4"><CovidWidget {...{ location: { state: { name: "Total Cases", number: d3.sum(this.props.world.map(c => c.cases)) } } } as unknown as CovidWidgetProps} /></Col>
-                            <Col md="4"><CovidWidget {...{ location: { state: { name: "Total Deaths", number: d3.sum(this.props.world.map(c => c.deaths)) } } } as unknown as CovidWidgetProps} /></Col>
-                            <Col md="4"><CovidWidget {...{ location: { state: { name: "Total Hospitalisations", number: d3.sum(this.props.world.map(c => c.hosp)) } } } as unknown as CovidWidgetProps} /></Col>
-                            <Col md="12"><CovidWorldTimeline  {...{ location: { state: { data: this.props.world } } } as unknown as CovidWorldTimelineProps} /></Col>
+                        <Row className="my-4">
+                            <Col md="9"><CovidWorldTimeline  {...{ location: { state: { data: this.props.world } } } as unknown as CovidWorldTimelineProps} /></Col>
+                            <Col md="3">
+                                <CovidWidget {...{ location: { state: { name: "Total Cases", number: d3.sum(this.props.world.map(c => c.cases)) } } } as unknown as CovidWidgetProps} />
+                                <CovidWidget {...{ location: { state: { name: "Total Deaths", number: d3.sum(this.props.world.map(c => c.deaths)) } } } as unknown as CovidWidgetProps} />
+                                <CovidWidget {...{ location: { state: { name: "Total Hospitalisations", number: d3.sum(this.props.world.map(c => c.hosp)) } } } as unknown as CovidWidgetProps} />
+                            </Col>
                         </Row>
                     }
                 </Container>
