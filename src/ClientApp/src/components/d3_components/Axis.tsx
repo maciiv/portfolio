@@ -21,7 +21,11 @@ export default class Axis extends React.PureComponent<AxisProps, { axis: d3.Axis
 
 
     public componentDidMount() {
-        this.renderAxis()
+        this.renderAxis();
+    }
+
+    public componentDidUpdate() {
+        this.renderAxis();
     }
 
     private renderAxis() {

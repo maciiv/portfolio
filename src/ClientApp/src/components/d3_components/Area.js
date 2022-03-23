@@ -33,6 +33,10 @@ var Area = /** @class */ (function (_super) {
     Area.prototype.componentDidMount = function () {
         this.renderArea();
     };
+    Area.prototype.componentDidUpdate = function () {
+        this.areaGenerator();
+        this.renderArea();
+    };
     Area.prototype.renderArea = function () {
         d3.select(this.ref.current)
             .classed("area", true)
@@ -40,6 +44,15 @@ var Area = /** @class */ (function (_super) {
             .duration(750)
             .ease(d3.easeLinear)
             .attr("opacity", 0.25);
+    };
+    Area.prototype.areaGenerator = function () {
+        var _this = this;
+        this.setState({
+            area: d3.area()
+                .x(function (d) { return _this.props.location.state.scaleX(d.x); })
+                .y1(function (d) { return _this.props.location.state.scaleY(d.y); })
+                .y0(function (d) { return _this.props.location.state.scaleY(0); })(this.props.location.state.data)
+        });
     };
     Area.prototype.render = function () {
         return (React.createElement("path", { ref: this.ref, d: this.state.area, fill: this.props.location.state.color, opacity: 0 }));

@@ -25,9 +25,9 @@ class CovidDashboard extends React.PureComponent<CovidDashboardProps> {
                         <Row className="my-4">
                             <Col md="9"><CovidWorldTimeline  {...{ location: { state: { data: this.props.world } } } as unknown as CovidWorldTimelineProps} /></Col>
                             <Col md="3">
-                                <CovidWidget {...{ location: { state: { name: "Total Cases", number: d3.sum(this.props.world.map(c => c.cases)) } } } as unknown as CovidWidgetProps} />
-                                <CovidWidget {...{ location: { state: { name: "Total Deaths", number: d3.sum(this.props.world.map(c => c.deaths)) } } } as unknown as CovidWidgetProps} />
-                                <CovidWidget {...{ location: { state: { name: "Total Hospitalisations", number: d3.sum(this.props.world.map(c => c.hosp)) } } } as unknown as CovidWidgetProps} />
+                                <CovidWidget {...{ location: { state: { name: "Total Cases", number: Math.round(d3.sum(this.props.world.map(c => c.cases))) } } } as unknown as CovidWidgetProps} />
+                                <CovidWidget {...{ location: { state: { name: "Total Hospitalisations", number: Math.round(d3.sum(this.props.world.map(c => c.hosp))) } } } as unknown as CovidWidgetProps} />
+                                <CovidWidget {...{ location: { state: { name: "Total Deaths", number: Math.round(d3.sum(this.props.world.map(c => c.deaths))) } } } as unknown as CovidWidgetProps} />                               
                             </Col>
                         </Row>
                     }

@@ -32,6 +32,9 @@ var Axis = /** @class */ (function (_super) {
     Axis.prototype.componentDidMount = function () {
         this.renderAxis();
     };
+    Axis.prototype.componentDidUpdate = function () {
+        this.renderAxis();
+    };
     Axis.prototype.renderAxis = function () {
         d3.select(this.ref.current)
             .transition()

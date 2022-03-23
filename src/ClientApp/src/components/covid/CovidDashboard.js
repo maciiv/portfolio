@@ -48,9 +48,9 @@ var CovidDashboard = /** @class */ (function (_super) {
                     React.createElement(reactstrap_1.Col, { md: "9" },
                         React.createElement(CovidWorldTimeline_1.default, __assign({}, { location: { state: { data: this.props.world } } }))),
                     React.createElement(reactstrap_1.Col, { md: "3" },
-                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Cases", number: d3.sum(this.props.world.map(function (c) { return c.cases; })) } } })),
-                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Deaths", number: d3.sum(this.props.world.map(function (c) { return c.deaths; })) } } })),
-                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Hospitalisations", number: d3.sum(this.props.world.map(function (c) { return c.hosp; })) } } })))))));
+                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Cases", number: Math.round(d3.sum(this.props.world.map(function (c) { return c.cases; }))) } } })),
+                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Hospitalisations", number: Math.round(d3.sum(this.props.world.map(function (c) { return c.hosp; }))) } } })),
+                        React.createElement(CovidWidget_1.default, __assign({}, { location: { state: { name: "Total Deaths", number: Math.round(d3.sum(this.props.world.map(function (c) { return c.deaths; }))) } } })))))));
     };
     CovidDashboard.prototype.ensureDataFetched = function () {
         this.props.requestCovidWorld();

@@ -21,8 +21,6 @@ export default class Timer extends React.PureComponent<TimerProps, { isActive: b
         this.startTimer();
     }
 
-    public compo
-
     public componentWillUnmount() {       
         if (this.props.location !== undefined) {
             this.props.location.state.time({ minutes: this.state.time.minutes, seconds: this.state.time.seconds });

@@ -20,7 +20,7 @@ namespace Portfolio.Controllers
             _logger = logger;
         }
 
-        private async Task<IEnumerable<Covid>> GetCovidDataAsync()
+        private static async Task<IEnumerable<Covid>> GetCovidDataAsync()
         {
             var file = new StreamReader("./data/covid.csv");
             
@@ -41,19 +41,18 @@ namespace Portfolio.Controllers
                     Country = values[1],
                     Year = int.Parse(values[2]),
                     Month = int.Parse(values[3]),
-                    Date = DateTime.Parse(values[2] + "-" + values[3] + "-1"),
-                    Cases = decimal.Parse(values[4]),
-                    Deaths = decimal.Parse(values[5]),
-                    Icu = decimal.Parse(values[6]),
-                    Hosp = decimal.Parse(values[7]),
-                    Vax = decimal.Parse(values[8]),
-                    Population = int.Parse(values[9]),
-                    MedianAge = decimal.Parse(values[10]),
-                    Age65 = decimal.Parse(values[11]),
-                    Age70 = decimal.Parse(values[12]),
-                    Gdp = decimal.Parse(values[13]),
-                    Life = decimal.Parse(values[14]),
-                    Hdi = decimal.Parse(values[15])
+                    Day = int.Parse(values[4]),
+                    Date = DateTime.Parse(values[2] + "-" + values[3] + "-" + values[4]),
+                    Cases = decimal.Parse(values[5]),
+                    Deaths = decimal.Parse(values[6]),
+                    Icu = decimal.Parse(values[7]),
+                    Hosp = decimal.Parse(values[8]),
+                    Vax = decimal.Parse(values[9]),
+                    Population = int.Parse(values[10]),
+                    MedianAge = decimal.Parse(values[11]),   
+                    Gdp = decimal.Parse(values[12]),
+                    Life = decimal.Parse(values[13]),
+                    Hdi = decimal.Parse(values[14])
                 };
                 countries.Add(data);
                 i++;
@@ -75,7 +74,7 @@ namespace Portfolio.Controllers
         public async Task<IEnumerable<Covid>> GetCovidContinentsAsync()
         {
             var countries = await GetCovidDataAsync();
-            var continent = countries.GroupBy(c => new { c.Continent, c.Year, c.Month }).Select(grp =>
+            var continent = countries.GroupBy(c => new { c.Continent, c.Year, c.Month , c.Day}).Select(grp =>
             {
                 return new Covid
                 {
@@ -83,6 +82,7 @@ namespace Portfolio.Controllers
                     Country = grp.FirstOrDefault().Continent,
                     Year = grp.FirstOrDefault().Year,
                     Month = grp.FirstOrDefault().Month,
+                    Day = grp.FirstOrDefault().Day,
                     Date = grp.FirstOrDefault().Date,
                     Cases = grp.Select(c => c.Cases).Sum(),
                     Deaths = grp.Select(c => c.Deaths).Sum(),
@@ -91,8 +91,6 @@ namespace Portfolio.Controllers
                     Vax = grp.Select(c => c.Vax).Sum(),
                     Population = grp.FirstOrDefault().Population,
                     MedianAge = grp.Select(c => c.MedianAge).Average(),
-                    Age65 = grp.Select(c => c.Age65).Sum(),
-                    Age70 = grp.Select(c => c.Age70).Sum(),
                     Gdp = grp.Select(c => c.Gdp).Sum(),
                     Life = grp.Select(c => c.Life).Average(),
                     Hdi = grp.Select(c => c.Hdi).Average()
@@ -107,7 +105,7 @@ namespace Portfolio.Controllers
         public async Task<IEnumerable<Covid>> GetCovidWorldAsync()
         {
             var countries = await GetCovidDataAsync();
-            var world = countries.GroupBy(c => new { c.Year, c.Month }).Select(grp =>
+            var world = countries.GroupBy(c => new { c.Year, c.Month, c.Day }).Select(grp =>
             {
                 return new Covid
                 {
@@ -115,6 +113,7 @@ namespace Portfolio.Controllers
                     Country = "World",
                     Year = grp.FirstOrDefault().Year,
                     Month = grp.FirstOrDefault().Month,
+                    Day = grp.FirstOrDefault().Day,
                     Date = grp.FirstOrDefault().Date,
                     Cases = grp.Select(c => c.Cases).Sum(),
                     Deaths = grp.Select(c => c.Deaths).Sum(),
@@ -123,8 +122,6 @@ namespace Portfolio.Controllers
                     Vax = grp.Select(c => c.Vax).Sum(),
                     Population = grp.FirstOrDefault().Population,
                     MedianAge = grp.Select(c => c.MedianAge).Average(),
-                    Age65 = grp.Select(c => c.Age65).Sum(),
-                    Age70 = grp.Select(c => c.Age70).Sum(),
                     Gdp = grp.Select(c => c.Gdp).Sum(),
                     Life = grp.Select(c => c.Life).Average(),
                     Hdi = grp.Select(c => c.Hdi).Average()

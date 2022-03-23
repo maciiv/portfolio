@@ -12,6 +12,7 @@ export interface CovidData {
     location: string,
     year: number,
     month: number,
+    day: number
     date: Date,
     cases: number,
     deaths: number,
@@ -20,8 +21,6 @@ export interface CovidData {
     vax: number,
     population: number,
     medianAge: number,
-    age65: number,
-    age70: number,
     gdp: number,
     life: number,
     hdi: number
@@ -79,12 +78,19 @@ export const actionCreators = {
             fetch(`covid/world`)
                 .then(response => response.json() as Promise<CovidData[]>)
                 .then(data => {
-                    dispatch({ type: 'RECEIVE_COVID_WORLD', world: data });
+                    dispatch({ type: 'RECEIVE_COVID_WORLD', world: transformData(data) });
                 });
 
             dispatch({ type: 'REQUEST_COVID' });
         }
     }
+}
+
+const transformData = (data: CovidData[]): CovidData[] => {
+    data.forEach(d => {
+        d.date = new Date(d.date)
+    });
+    return data.sort((a, b) => a.date.getTime() > b.date.getTime() ? 1 : -1);
 }
 
 const unloadedState: CovidState = { countries: [], continents: [], world: [] };

@@ -28,6 +28,20 @@ export default class Line extends React.PureComponent<LineProps, { d: string }> 
         this.renderLine();
     }
 
+    public componentDidUpdate() {
+        this.pathGenerator();
+        this.renderLine();
+    }
+
+    private pathGenerator() {
+        this.setState({
+            d: d3.line<LineData>()
+                .x(d => this.props.location.state.scaleX(d.x) as number)
+                .y(d => this.props.location.state.scaleY(d.y) as number)
+                (this.props.location.state.data)
+        })
+    }
+
     public renderLine() {
         let totalLenght = this.ref.current.getTotalLength();
 

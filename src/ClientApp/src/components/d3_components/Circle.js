@@ -27,6 +27,9 @@ var Circle = /** @class */ (function (_super) {
     Circle.prototype.componentDidMount = function () {
         this.renderCircle();
     };
+    Circle.prototype.componentDidUpdate = function () {
+        this.renderCircle();
+    };
     Circle.prototype.renderCircle = function () {
         d3.select(this.ref.current)
             .classed("circle", true)

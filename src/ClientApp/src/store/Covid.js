@@ -30,11 +30,17 @@ exports.actionCreators = {
             fetch("covid/world")
                 .then(function (response) { return response.json(); })
                 .then(function (data) {
-                dispatch({ type: 'RECEIVE_COVID_WORLD', world: data });
+                dispatch({ type: 'RECEIVE_COVID_WORLD', world: transformData(data) });
             });
             dispatch({ type: 'REQUEST_COVID' });
         }
     }; }
+};
+var transformData = function (data) {
+    data.forEach(function (d) {
+        d.date = new Date(d.date);
+    });
+    return data.sort(function (a, b) { return a.date.getTime() > b.date.getTime() ? 1 : -1; });
 };
 var unloadedState = { countries: [], continents: [], world: [] };
 var reducer = function (state, incomingAction) {

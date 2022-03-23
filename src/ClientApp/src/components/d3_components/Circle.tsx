@@ -19,6 +19,10 @@ export default class Circle extends React.PureComponent<CircleProps> {
         this.renderCircle();
     }
 
+    public componentDidUpdate() {
+        this.renderCircle();
+    }
+
     public renderCircle() {
         d3.select(this.ref.current)
             .classed("circle", true)

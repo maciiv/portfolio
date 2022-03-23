@@ -32,6 +32,18 @@ var Line = /** @class */ (function (_super) {
     Line.prototype.componentDidMount = function () {
         this.renderLine();
     };
+    Line.prototype.componentDidUpdate = function () {
+        this.pathGenerator();
+        this.renderLine();
+    };
+    Line.prototype.pathGenerator = function () {
+        var _this = this;
+        this.setState({
+            d: d3.line()
+                .x(function (d) { return _this.props.location.state.scaleX(d.x); })
+                .y(function (d) { return _this.props.location.state.scaleY(d.y); })(this.props.location.state.data)
+        });
+    };
     Line.prototype.renderLine = function () {
         var totalLenght = this.ref.current.getTotalLength();
         d3.select(this.ref.current)

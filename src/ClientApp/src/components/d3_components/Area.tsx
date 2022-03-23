@@ -29,6 +29,11 @@ export default class Area extends React.PureComponent<AreaProps, { area: string 
         this.renderArea();
     }
 
+    public componentDidUpdate() {
+        this.areaGenerator();
+        this.renderArea();
+    }
+
     public renderArea() {
         d3.select(this.ref.current)
             .classed("area", true)
@@ -36,6 +41,16 @@ export default class Area extends React.PureComponent<AreaProps, { area: string 
             .duration(750)
             .ease(d3.easeLinear)
             .attr("opacity", 0.25);
+    }
+
+    private areaGenerator() {
+        this.setState({
+            area: d3.area<AreaData>()
+                .x(d => this.props.location.state.scaleX(d.x) as number)
+                .y1(d => this.props.location.state.scaleY(d.y) as number)
+                .y0(d => this.props.location.state.scaleY(0 as number & (number | Date) & string) as number)
+                (this.props.location.state.data)
+        })
     }
 
     public render() {
