@@ -8,8 +8,7 @@ import ContentContainer, { ContentContainerProps } from '../d3_components/Conten
 import Axis, { AxisProps } from '../d3_components/Axis';
 import Line, { LineData, LineProps } from '../d3_components/Line';
 import Area, { AreaData, AreaProps } from '../d3_components/Area';
-import OverlayContainer, { OverlayContainerProps, OverlayTooltipData } from '../d3_components/OverlayContainer';
-import D3Tooltip, { D3TooltipData, D3TooltipProps } from '../d3_components/Tooltip';
+import CovidWorldTimelineOverlay, { CovidWorldTimelineOverlayProps } from './CovidWorldTimelineOverlay';
 
 export type CovidWorldTimelineProps =
     RouteComponentProps<{}, {}, { data: CovidData[] }>;
@@ -26,7 +25,6 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
     isLoading: boolean
 }> {
     ref = React.createRef<HTMLDivElement>();
-    overlayRef = React.createRef<SVGRectElement>();
     public state = {
         width: 0,
         height: 0,
@@ -71,7 +69,8 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
         this.updateData(this.props.location.state.data)
     }
 
-    private dataByMonth() {      
+    private dataByMonth() {
+        
         let monthData = d3.rollup(this.props.location.state.data, d => { return { cases: d3.sum(d.map(c => c.cases)), hosp: d3.sum(d.map(c => c.hosp)), deaths: d3.sum(d.map(c => c.deaths)) } }, d => d.month, d => d.year)
         let data = [] as CovidData[];
         Array.from(monthData).forEach(d => {            
@@ -294,7 +293,7 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
                                         }
                                     } as unknown as AxisProps}
                                 />
-                                <OverlayContainer
+                                <CovidWorldTimelineOverlay
                                     {...
                                     {
                                         location:
@@ -306,11 +305,13 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
                                                 translateX: this.state.margin.left,
                                                 translateY: this.state.margin.top,
                                                 scaleX: this.state.scaleX,
-                                                scaleY: this.state.scaleYCases,
-                                                data: this.state.data.map(d => { return { x: d.date, y: d.cases, name: "Cases", value: d.cases } as OverlayTooltipData })
+                                                scaleYCases: this.state.scaleYCases,
+                                                scaleYHosp: this.state.scaleYHosp,
+                                                scaleYDeaths: this.state.scaleYDeaths,
+                                                data: this.state.data
                                             }
                                         }
-                                    } as unknown as OverlayContainerProps}
+                                    } as unknown as CovidWorldTimelineOverlayProps}
                                 />                                                           
                             </svg>
                         }

@@ -33,13 +33,12 @@ var ContentContainer_1 = require("../d3_components/ContentContainer");
 var Axis_1 = require("../d3_components/Axis");
 var Line_1 = require("../d3_components/Line");
 var Area_1 = require("../d3_components/Area");
-var OverlayContainer_1 = require("../d3_components/OverlayContainer");
+var CovidWorldTimelineOverlay_1 = require("./CovidWorldTimelineOverlay");
 var CovidWorldTimeline = /** @class */ (function (_super) {
     __extends(CovidWorldTimeline, _super);
     function CovidWorldTimeline() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.ref = React.createRef();
-        _this.overlayRef = React.createRef();
         _this.state = {
             width: 0,
             height: 0,
@@ -238,7 +237,7 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
                                 }
                             }
                         })),
-                        React.createElement(OverlayContainer_1.default, __assign({}, {
+                        React.createElement(CovidWorldTimelineOverlay_1.default, __assign({}, {
                             location: {
                                 state: {
                                     width: this.state.width,
@@ -246,8 +245,10 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
                                     translateX: this.state.margin.left,
                                     translateY: this.state.margin.top,
                                     scaleX: this.state.scaleX,
-                                    scaleY: this.state.scaleYCases,
-                                    data: this.state.data.map(function (d) { return { x: d.date, y: d.cases, name: "Cases", value: d.cases }; })
+                                    scaleYCases: this.state.scaleYCases,
+                                    scaleYHosp: this.state.scaleYHosp,
+                                    scaleYDeaths: this.state.scaleYDeaths,
+                                    data: this.state.data
                                 }
                             }
                         })))))));

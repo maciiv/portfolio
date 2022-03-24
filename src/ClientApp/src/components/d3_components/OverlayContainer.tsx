@@ -31,7 +31,7 @@ export default class OverlayContainer extends React.PureComponent<OverlayContain
         const scaledPosition = this.scalePosition(e);
         this.renderLine(scaledPosition[0]);
         this.renderCircle(this.refC1.current, scaledPosition[0], scaledPosition[1]);
-        this.renderContent(scaledPosition[2])
+        this.renderContent(scaledPosition[0], scaledPosition[1], scaledPosition[2]);
     }
 
     private scalePosition(e: React.MouseEvent<SVGRectElement, MouseEvent>): [number, number, OverlayTooltipData] {
@@ -59,13 +59,19 @@ export default class OverlayContainer extends React.PureComponent<OverlayContain
             .attr("cy", y)
     }
 
-    private renderContent(data: OverlayTooltipData) {
+    private renderContent(x: number, y: number, data: OverlayTooltipData) {
+        d3.select(this.ref.current)
+            .select(".tooltip-content")
+            .attr("transform", `translate(${x}, 30)`)
         d3.select(this.ref.current)
             .select(".content-title")
             .text(d3.timeFormat("%b %d, %Y")(data.x))
         d3.select(this.ref.current)
             .select("#cases .item-value")
             .text(data.value)
+        d3.select(this.ref.current)
+            .select(".content")
+            .attr("transform", "translate(10, 15)")
     }
 
     public render() {
@@ -77,10 +83,10 @@ export default class OverlayContainer extends React.PureComponent<OverlayContain
                         <rect className="content-background" />
                         <text className="content-title" />
                         <g className="content">
-                            <g key="cases">
+                            <g id="cases" key="cases">
                                 <circle r={5} />
-                                <text className="item-name">Cases</text>
-                                <text className="item-value" />
+                                <text className="item-name" x={10}>Cases: </text>
+                                <text className="item-value" x={60} />
                             </g>
                         </g>
                     </g>

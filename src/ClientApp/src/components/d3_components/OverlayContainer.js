@@ -32,7 +32,7 @@ var OverlayContainer = /** @class */ (function (_super) {
         var scaledPosition = this.scalePosition(e);
         this.renderLine(scaledPosition[0]);
         this.renderCircle(this.refC1.current, scaledPosition[0], scaledPosition[1]);
-        this.renderContent(scaledPosition[2]);
+        this.renderContent(scaledPosition[0], scaledPosition[1], scaledPosition[2]);
     };
     OverlayContainer.prototype.scalePosition = function (e) {
         var positionX = this.props.location.state.scaleX.invert(d3.pointer(e)[0]);
@@ -56,13 +56,19 @@ var OverlayContainer = /** @class */ (function (_super) {
             .attr("cx", x)
             .attr("cy", y);
     };
-    OverlayContainer.prototype.renderContent = function (data) {
+    OverlayContainer.prototype.renderContent = function (x, y, data) {
+        d3.select(this.ref.current)
+            .select(".tooltip-content")
+            .attr("transform", "translate(".concat(x, ", 30)"));
         d3.select(this.ref.current)
             .select(".content-title")
             .text(d3.timeFormat("%b %d, %Y")(data.x));
         d3.select(this.ref.current)
             .select("#cases .item-value")
             .text(data.value);
+        d3.select(this.ref.current)
+            .select(".content")
+            .attr("transform", "translate(10, 15)");
     };
     OverlayContainer.prototype.render = function () {
         var _this = this;
@@ -73,10 +79,10 @@ var OverlayContainer = /** @class */ (function (_super) {
                     React.createElement("rect", { className: "content-background" }),
                     React.createElement("text", { className: "content-title" }),
                     React.createElement("g", { className: "content" },
-                        React.createElement("g", { key: "cases" },
+                        React.createElement("g", { id: "cases", key: "cases" },
                             React.createElement("circle", { r: 5 }),
-                            React.createElement("text", { className: "item-name" }, "Cases"),
-                            React.createElement("text", { className: "item-value" })))),
+                            React.createElement("text", { className: "item-name", x: 10 }, "Cases: "),
+                            React.createElement("text", { className: "item-value", x: 60 })))),
                 React.createElement("circle", { ref: this.refC1, r: 5 })),
             React.createElement("rect", { onMouseMove: function (e) { return _this.getPosition(e); }, onMouseEnter: function () { return _this.setState({ isOn: true }); }, onMouseLeave: function () { return _this.setState({ isOn: false }); }, width: this.props.location.state.width, height: this.props.location.state.height, opacity: 0 })));
     };

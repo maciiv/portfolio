@@ -28,15 +28,15 @@
   <ItemGroup>
     <None Remove="ClientApp\src\assets\js\CustomMethods.ts" />
     <None Remove="ClientApp\src\components\covid\CovidDashboard.tsx" />
-    <None Remove="ClientApp\src\components\covid\CovidWidget.tsx" />
+    <None Remove="ClientApp\src\components\covid\CovidWorld.tsx" />
     <None Remove="ClientApp\src\components\covid\CovidWorldTimeline.tsx" />
+    <None Remove="ClientApp\src\components\covid\CovidWorldTimelineOverlay.tsx" />
     <None Remove="ClientApp\src\components\d3_components\Area.tsx" />
     <None Remove="ClientApp\src\components\d3_components\Axis.tsx" />
     <None Remove="ClientApp\src\components\d3_components\Circle.tsx" />
     <None Remove="ClientApp\src\components\d3_components\ContentContainer.tsx" />
     <None Remove="ClientApp\src\components\d3_components\Line.tsx" />
     <None Remove="ClientApp\src\components\d3_components\OverlayContainer.tsx" />
-    <None Remove="ClientApp\src\components\d3_components\Tooltip.tsx" />
     <None Remove="ClientApp\src\components\Footer.tsx" />
     <None Remove="ClientApp\src\components\Hero.tsx" />
     <None Remove="ClientApp\src\components\PortfolioItems.tsx" />
@@ -49,6 +49,15 @@
     <None Remove="ClientApp\src\store\PortfolioItems.ts" />
     <None Remove="ClientApp\src\store\Scheduler.ts" />
     <None Remove="ClientApp\src\store\Trivia.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Update="ClientApp\src\components\covid\CovidWorld.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Update="ClientApp\src\components\covid\CovidWorldTimelineOverlay.tsx">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

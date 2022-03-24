@@ -1537,3 +1537,24 @@ blockquote {
 .zoom {
     fill: none;
 }
+
+.tooltip-content .content-title {
+    fill: #ffffff;
+    font-weight: bold;
+}
+
+.tooltip-content .content-background {
+    stroke-width: 1;
+    stroke: #333333;
+    fill: #333333;
+    fill-opacity: 0.75;
+    ry: 5;
+    rx: 5;
+}
+
+.tooltip-content .item-name, .tooltip-content .item-value {
+    dominant-baseline: central;
+    fill: #ffffff;
+    font-size: 0.75rem;
+
+}
