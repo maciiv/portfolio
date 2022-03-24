@@ -62,7 +62,10 @@ export default class OverlayContainer extends React.PureComponent<OverlayContain
     private renderContent(data: OverlayTooltipData) {
         d3.select(this.ref.current)
             .select(".content-title")
-            .text(data.x)
+            .text(d3.timeFormat("%b %d, %Y")(data.x))
+        d3.select(this.ref.current)
+            .select("#cases .item-value")
+            .text(data.value)
     }
 
     public render() {
@@ -74,6 +77,11 @@ export default class OverlayContainer extends React.PureComponent<OverlayContain
                         <rect className="content-background" />
                         <text className="content-title" />
                         <g className="content">
+                            <g key="cases">
+                                <circle r={5} />
+                                <text className="item-name">Cases</text>
+                                <text className="item-value" />
+                            </g>
                         </g>
                     </g>
                     <circle ref={this.refC1} r={5} />

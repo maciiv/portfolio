@@ -59,7 +59,10 @@ var OverlayContainer = /** @class */ (function (_super) {
     OverlayContainer.prototype.renderContent = function (data) {
         d3.select(this.ref.current)
             .select(".content-title")
-            .text(data.x);
+            .text(d3.timeFormat("%b %d, %Y")(data.x));
+        d3.select(this.ref.current)
+            .select("#cases .item-value")
+            .text(data.value);
     };
     OverlayContainer.prototype.render = function () {
         var _this = this;
@@ -69,7 +72,11 @@ var OverlayContainer = /** @class */ (function (_super) {
                 React.createElement("g", { className: "tooltip-content" },
                     React.createElement("rect", { className: "content-background" }),
                     React.createElement("text", { className: "content-title" }),
-                    React.createElement("g", { className: "content" })),
+                    React.createElement("g", { className: "content" },
+                        React.createElement("g", { key: "cases" },
+                            React.createElement("circle", { r: 5 }),
+                            React.createElement("text", { className: "item-name" }, "Cases"),
+                            React.createElement("text", { className: "item-value" })))),
                 React.createElement("circle", { ref: this.refC1, r: 5 })),
             React.createElement("rect", { onMouseMove: function (e) { return _this.getPosition(e); }, onMouseEnter: function () { return _this.setState({ isOn: true }); }, onMouseLeave: function () { return _this.setState({ isOn: false }); }, width: this.props.location.state.width, height: this.props.location.state.height, opacity: 0 })));
     };
