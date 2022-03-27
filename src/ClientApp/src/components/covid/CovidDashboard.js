@@ -14,23 +14,12 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var react_redux_1 = require("react-redux");
+var react_router_dom_1 = require("react-router-dom");
 var reactstrap_1 = require("reactstrap");
 var CovidStore = require("../../store/Covid");
-var CovidWorld_1 = require("./CovidWorld");
 var CovidDashboard = /** @class */ (function (_super) {
     __extends(CovidDashboard, _super);
     function CovidDashboard() {
@@ -41,11 +30,18 @@ var CovidDashboard = /** @class */ (function (_super) {
     };
     CovidDashboard.prototype.render = function () {
         return (React.createElement(React.Fragment, null,
-            React.createElement(reactstrap_1.Container, null, this.props.world.length === 0 ? React.createElement(reactstrap_1.Spinner, null) :
-                React.createElement(CovidWorld_1.default, __assign({}, { location: { state: { data: this.props.world } } })))));
+            React.createElement(reactstrap_1.Container, null,
+                React.createElement(reactstrap_1.Row, { className: "my-4" },
+                    this.props.world.length === 0 ? React.createElement(reactstrap_1.Spinner, null) :
+                        React.createElement(reactstrap_1.Col, { md: "12", className: "d-flex my-2" },
+                            React.createElement(react_router_dom_1.Link, { to: { pathname: "/visualisations/covid-dashboard/world", state: { data: this.props.world } }, className: "btn btn-secondary btn-block mx-auto w-50" }, "Covid World Dashboard")),
+                    this.props.countries.length === 0 ? React.createElement(reactstrap_1.Spinner, null) :
+                        React.createElement(reactstrap_1.Col, { md: "12", className: "d-flex my-2" },
+                            React.createElement(react_router_dom_1.Link, { to: { pathname: "/visualisations/covid-dashboard/countries", state: { data: this.props.countries } }, className: "btn btn-secondary btn-block mx-auto w-50" }, "Covid Countries Dashboard"))))));
     };
     CovidDashboard.prototype.ensureDataFetched = function () {
         this.props.requestCovidWorld();
+        this.props.requestCovidCountries();
     };
     return CovidDashboard;
 }(React.PureComponent));

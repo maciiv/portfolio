@@ -48,6 +48,7 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
             scaleYCases: {},
             scaleYHosp: {},
             scaleYDeaths: {},
+            scaleYVax: {},
             isLoading: true
         };
         return _this;
@@ -68,13 +69,16 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
                 .range([0, width]),
             scaleYCases: d3.scaleLinear()
                 .domain([0, d3.max(this.state.data, function (d) { return d.cases; })])
-                .range([height / 3, 0]),
+                .range([height / 4, 0]),
             scaleYHosp: d3.scaleLinear()
                 .domain([0, d3.max(this.state.data, function (d) { return d.hosp; })])
-                .range([height * 2 / 3, height / 3]),
+                .range([height / 2, height / 4]),
             scaleYDeaths: d3.scaleLinear()
                 .domain([0, d3.max(this.state.data, function (d) { return d.deaths; })])
-                .range([height, height * 2 / 3]),
+                .range([height * 3 / 4, height / 2]),
+            scaleYVax: d3.scaleLinear()
+                .domain([0, d3.max(this.state.data, function (d) { return d.vax; })])
+                .range([height, height * 3 / 4]),
             isLoading: false
         });
     };
@@ -82,7 +86,14 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
         this.updateData(this.props.location.state.data);
     };
     CovidWorldTimeline.prototype.dataByMonth = function () {
-        var monthData = d3.rollup(this.props.location.state.data, function (d) { return { cases: d3.sum(d.map(function (c) { return c.cases; })), hosp: d3.sum(d.map(function (c) { return c.hosp; })), deaths: d3.sum(d.map(function (c) { return c.deaths; })) }; }, function (d) { return d.month; }, function (d) { return d.year; });
+        var monthData = d3.rollup(this.props.location.state.data, function (d) {
+            return {
+                cases: d3.sum(d.map(function (c) { return c.cases; })),
+                hosp: d3.sum(d.map(function (c) { return c.hosp; })),
+                deaths: d3.sum(d.map(function (c) { return c.deaths; })),
+                vax: d3.sum(d.map(function (c) { return c.vax; }))
+            };
+        }, function (d) { return d.month; }, function (d) { return d.year; });
         var data = [];
         Array.from(monthData).forEach(function (d) {
             Array.from(d[1]).forEach(function (c) {
@@ -90,14 +101,22 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
                     date: new Date("".concat(c[0], "-").concat(d[0], "-1")),
                     cases: c[1].cases,
                     deaths: c[1].deaths,
-                    hosp: c[1].hosp
+                    hosp: c[1].hosp,
+                    vax: c[1].vax
                 });
             });
         });
         this.updateData(d3.sort(data, function (d) { return d.date; }));
     };
     CovidWorldTimeline.prototype.dataByYear = function () {
-        var yearData = d3.rollup(this.props.location.state.data, function (d) { return { cases: d3.sum(d.map(function (c) { return c.cases; })), hosp: d3.sum(d.map(function (c) { return c.hosp; })), deaths: d3.sum(d.map(function (c) { return c.deaths; })) }; }, function (d) { return d.year; });
+        var yearData = d3.rollup(this.props.location.state.data, function (d) {
+            return {
+                cases: d3.sum(d.map(function (c) { return c.cases; })),
+                hosp: d3.sum(d.map(function (c) { return c.hosp; })),
+                deaths: d3.sum(d.map(function (c) { return c.deaths; })),
+                vax: d3.sum(d.map(function (c) { return c.vax; }))
+            };
+        }, function (d) { return d.year; });
         this.updateData(Array.from(yearData, function (_a) {
             var date = _a[0], sum = _a[1];
             return ({ date: new Date(date + "-01-01"), cases: sum.cases, hosp: sum.hosp, deaths: sum.deaths });
@@ -109,20 +128,22 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
             scaleX: this.state.scaleX.domain(d3.extent(data.map(function (d) { return d.date; }))),
             scaleYCases: this.state.scaleYCases.domain([0, d3.max(data.map(function (d) { return d.cases; }))]),
             scaleYHosp: this.state.scaleYHosp.domain([0, d3.max(data.map(function (d) { return d.hosp; }))]),
-            scaleYDeaths: this.state.scaleYDeaths.domain([0, d3.max(data.map(function (d) { return d.deaths; }))])
+            scaleYDeaths: this.state.scaleYDeaths.domain([0, d3.max(data.map(function (d) { return d.deaths; }))]),
+            scaleYVax: this.state.scaleYVax.domain([0, d3.max(data.map(function (d) { return d.vax; }))])
         });
     };
     CovidWorldTimeline.prototype.render = function () {
         var _this = this;
         return (React.createElement(reactstrap_1.Card, null,
             React.createElement(reactstrap_1.CardBody, null,
-                React.createElement(reactstrap_1.CardTitle, null, "World COVID-19 Cases Timeline"),
+                React.createElement(reactstrap_1.CardTitle, null,
+                    React.createElement("h5", null, "World COVID-19 Timeline")),
                 React.createElement(reactstrap_1.CardSubtitle, null,
                     React.createElement(reactstrap_1.ButtonGroup, null,
                         React.createElement(reactstrap_1.Button, { onClick: function () { return _this.dataByDay(); } }, "Day"),
                         React.createElement(reactstrap_1.Button, { onClick: function () { return _this.dataByMonth(); } }, "Month"),
                         React.createElement(reactstrap_1.Button, { onClick: function () { return _this.dataByYear(); } }, "Year"))),
-                React.createElement("div", { ref: this.ref, style: { width: "100%", height: "50vh" } }, this.state.isLoading ? React.createElement(reactstrap_1.Spinner, null) :
+                React.createElement("div", { ref: this.ref, style: { width: "100%", height: "60vh" } }, this.state.isLoading ? React.createElement(reactstrap_1.Spinner, null) :
                     React.createElement("svg", { preserveAspectRatio: "xMinYMin meet", viewBox: "0 0 ".concat(this.state.width + this.state.margin.left + this.state.margin.right, " ").concat(this.state.height + this.state.margin.top + this.state.margin.bottom) },
                         React.createElement(ContentContainer_1.default, __assign({}, {
                             location: {
@@ -193,6 +214,26 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
                                         color: "#b30000"
                                     }
                                 }
+                            })),
+                            React.createElement(Line_1.default, __assign({}, {
+                                location: {
+                                    state: {
+                                        scaleX: this.state.scaleX,
+                                        scaleY: this.state.scaleYVax,
+                                        data: this.state.data.map(function (d) { return { x: d.date, y: d.vax }; }),
+                                        color: "#009933"
+                                    }
+                                }
+                            })),
+                            React.createElement(Area_1.default, __assign({}, {
+                                location: {
+                                    state: {
+                                        scaleX: this.state.scaleX,
+                                        scaleY: this.state.scaleYVax,
+                                        data: this.state.data.map(function (d) { return { x: d.date, y: d.vax }; }),
+                                        color: "#009933"
+                                    }
+                                }
                             }))),
                         React.createElement(Axis_1.default, __assign({}, {
                             location: {
@@ -230,6 +271,17 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
                         React.createElement(Axis_1.default, __assign({}, {
                             location: {
                                 state: {
+                                    type: "left",
+                                    translateX: this.state.margin.left,
+                                    translateY: this.state.margin.top,
+                                    ticks: 4,
+                                    scale: this.state.scaleYVax
+                                }
+                            }
+                        })),
+                        React.createElement(Axis_1.default, __assign({}, {
+                            location: {
+                                state: {
                                     type: "bottom",
                                     translateX: this.state.margin.left,
                                     translateY: this.state.margin.top + this.state.height,
@@ -248,6 +300,7 @@ var CovidWorldTimeline = /** @class */ (function (_super) {
                                     scaleYCases: this.state.scaleYCases,
                                     scaleYHosp: this.state.scaleYHosp,
                                     scaleYDeaths: this.state.scaleYDeaths,
+                                    scaleYVax: this.state.scaleYVax,
                                     data: this.state.data
                                 }
                             }

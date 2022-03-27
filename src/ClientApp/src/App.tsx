@@ -9,6 +9,8 @@ import TriviaHome from './components/trivia/TriviaHome';
 import TriviaQuestions from './components/trivia/TriviaQuestions';
 import TriviaWinners from './components/trivia/TriviaWinners';
 import CovidDashboard from './components/covid/CovidDashboard';
+import CovidWorld from './components/covid/CovidWorld';
+import CovidCountries from './components/covid/CovidCountries';
 
 import './assets/css/custom.css'
 
@@ -21,6 +23,8 @@ export default () => (
         <Route exact path='/webapps/trivia' component={TriviaHome} />
         <Route exact path='/webapps/trivia/questions' component={TriviaQuestions} />
         <Route exact path='/webapps/trivia/finish' component={TriviaWinners} />
-        <Route exact patc='/visualisations/covid-dashboard' component={CovidDashboard} />
+        <Route exact path='/visualisations/covid-dashboard' component={CovidDashboard} />
+        <Route exact path='/visualisations/covid-dashboard/world' component={CovidWorld} />
+        <Route exact path='/visualisations/covid-dashboard/countries' component={CovidCountries} />
     </Layout>
 );

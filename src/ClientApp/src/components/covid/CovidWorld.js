@@ -35,51 +35,64 @@ var CovidWorld = /** @class */ (function (_super) {
     function CovidWorld() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.state = {
-            totalCases: Math.round(d3.sum(_this.props.location.state.data.map(function (c) { return c.cases; }))),
-            totalHosp: Math.round(d3.sum(_this.props.location.state.data.map(function (c) { return c.hosp; }))),
-            totalDeaths: Math.round(d3.sum(_this.props.location.state.data.map(function (c) { return c.deaths; }))),
+            totalCases: 0,
+            totalHosp: 0,
+            totalDeaths: 0,
+            totalVax: 0,
             isLoading: true
         };
         return _this;
     }
     CovidWorld.prototype.componentDidMount = function () {
-        this.setState({
-            isLoading: false
-        });
+        if (this.props.location.state !== undefined) {
+            this.setState({
+                totalCases: Math.round(d3.sum(this.props.location.state.data.map(function (c) { return c.cases; }))),
+                totalHosp: Math.round(d3.sum(this.props.location.state.data.map(function (c) { return c.hosp; }))),
+                totalDeaths: Math.round(d3.sum(this.props.location.state.data.map(function (c) { return c.deaths; }))),
+                totalVax: Math.round(d3.sum(this.props.location.state.data.map(function (c) { return c.vax; }))),
+                isLoading: false
+            });
+        }
     };
     CovidWorld.prototype.render = function () {
         return (React.createElement(React.Fragment, null, this.state.isLoading ? React.createElement(reactstrap_1.Spinner, null) :
-            React.createElement(reactstrap_1.Row, { className: "my-4" },
+            React.createElement(reactstrap_1.Row, { className: "m-4" },
                 React.createElement(reactstrap_1.Col, { md: "3" },
                     React.createElement(reactstrap_1.Card, null,
                         React.createElement(reactstrap_1.CardBody, null,
                             React.createElement(reactstrap_1.CardTitle, { className: "d-flex" },
-                                React.createElement("span", { className: "mx-auto" }, this.state.totalCases)),
-                            React.createElement(reactstrap_1.CardSubtitle, { className: "mb-2 text-muted d-flex" },
-                                React.createElement("span", { className: "mx-auto" }, "Total Cases"))))),
+                                React.createElement("h5", { className: "mx-auto font-weight-bold" }, this.state.totalCases)),
+                            React.createElement(reactstrap_1.CardSubtitle, { className: "text-muted d-flex" },
+                                React.createElement("span", { className: "mx-auto" }, "Total Cases")),
+                            React.createElement(reactstrap_1.CardSubtitle, { className: "text-muted d-flex" },
+                                React.createElement("small", { className: "mx-auto" }, "(per million)"))))),
                 React.createElement(reactstrap_1.Col, { md: "3" },
                     React.createElement(reactstrap_1.Card, null,
                         React.createElement(reactstrap_1.CardBody, null,
                             React.createElement(reactstrap_1.CardTitle, { className: "d-flex" },
-                                React.createElement("span", { className: "mx-auto" }, this.state.totalHosp)),
-                            React.createElement(reactstrap_1.CardSubtitle, { className: "mb-2 text-muted d-flex" },
-                                React.createElement("span", { className: "mx-auto" }, "Total Hospitalisations"))))),
+                                React.createElement("h5", { className: "mx-auto font-weight-bold" }, this.state.totalHosp)),
+                            React.createElement(reactstrap_1.CardSubtitle, { className: "text-muted d-flex" },
+                                React.createElement("span", { className: "mx-auto" }, "Total Hospitalisations")),
+                            React.createElement(reactstrap_1.CardSubtitle, { className: "text-muted d-flex" },
+                                React.createElement("small", { className: "mx-auto" }, "(per million)"))))),
                 React.createElement(reactstrap_1.Col, { md: "3" },
                     React.createElement(reactstrap_1.Card, null,
                         React.createElement(reactstrap_1.CardBody, null,
                             React.createElement(reactstrap_1.CardTitle, { className: "d-flex" },
-                                React.createElement("span", { className: "mx-auto" }, this.state.totalDeaths)),
-                            React.createElement(reactstrap_1.CardSubtitle, { className: "mb-2 text-muted d-flex" },
-                                React.createElement("span", { className: "mx-auto" }, "Total Deaths"))))),
+                                React.createElement("h5", { className: "mx-auto font-weight-bold" }, this.state.totalDeaths)),
+                            React.createElement(reactstrap_1.CardSubtitle, { className: "text-muted d-flex" },
+                                React.createElement("span", { className: "mx-auto" }, "Total Deaths")),
+                            React.createElement(reactstrap_1.CardSubtitle, { className: "text-muted d-flex" },
+                                React.createElement("small", { className: "mx-auto" }, "(per million)"))))),
                 React.createElement(reactstrap_1.Col, { md: "3" },
                     React.createElement(reactstrap_1.Card, null,
                         React.createElement(reactstrap_1.CardBody, null,
                             React.createElement(reactstrap_1.CardTitle, { className: "d-flex" },
-                                React.createElement("span", { className: "mx-auto" },
-                                    Math.round(this.state.totalDeaths / this.state.totalCases * 10000) / 100,
-                                    "%")),
-                            React.createElement(reactstrap_1.CardSubtitle, { className: "mb-2 text-muted d-flex" },
-                                React.createElement("span", { className: "mx-auto" }, "Mortality Rate"))))),
+                                React.createElement("h5", { className: "mx-auto font-weight-bold" }, this.state.totalVax)),
+                            React.createElement(reactstrap_1.CardSubtitle, { className: "text-muted d-flex" },
+                                React.createElement("span", { className: "mx-auto" }, "Total fully vax")),
+                            React.createElement(reactstrap_1.CardSubtitle, { className: "text-muted d-flex" },
+                                React.createElement("small", { className: "mx-auto" }, "(per hundred)"))))),
                 React.createElement(reactstrap_1.Col, { md: "12", className: "mt-3" },
                     React.createElement(CovidWorldTimeline_1.default, __assign({}, { location: { state: { data: this.props.location.state.data } } }))))));
     };

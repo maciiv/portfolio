@@ -22,6 +22,7 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
     scaleYCases: d3.ScaleLinear<number, number, never>,
     scaleYHosp: d3.ScaleLinear<number, number, never>,
     scaleYDeaths: d3.ScaleLinear<number, number, never>,
+    scaleYVax: d3.ScaleLinear<number, number, never>,
     isLoading: boolean
 }> {
     ref = React.createRef<HTMLDivElement>();
@@ -34,6 +35,7 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
         scaleYCases: {} as d3.ScaleLinear<number, number, never>,
         scaleYHosp: {} as d3.ScaleLinear<number, number, never>,
         scaleYDeaths: {} as d3.ScaleLinear<number, number, never>,
+        scaleYVax: {} as d3.ScaleLinear<number, number, never>,
         isLoading: true
     }
 
@@ -54,13 +56,16 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
                 .range([0, width]),
             scaleYCases: d3.scaleLinear()
                 .domain([0, d3.max(this.state.data, d => d.cases)])
-                .range([height / 3, 0]),
+                .range([height / 4, 0]),
             scaleYHosp: d3.scaleLinear()
                 .domain([0, d3.max(this.state.data, d => d.hosp)])
-                .range([height * 2 / 3, height / 3]),
+                .range([height / 2, height / 4]),
             scaleYDeaths: d3.scaleLinear()
                 .domain([0, d3.max(this.state.data, d => d.deaths)])
-                .range([height, height * 2 / 3]),           
+                .range([height * 3 / 4, height / 2]),           
+            scaleYVax: d3.scaleLinear()
+                .domain([0, d3.max(this.state.data, d => d.vax)])
+                .range([height, height * 3 / 4]),           
             isLoading: false
         });
     }
@@ -71,7 +76,15 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
 
     private dataByMonth() {
         
-        let monthData = d3.rollup(this.props.location.state.data, d => { return { cases: d3.sum(d.map(c => c.cases)), hosp: d3.sum(d.map(c => c.hosp)), deaths: d3.sum(d.map(c => c.deaths)) } }, d => d.month, d => d.year)
+        let monthData = d3.rollup(this.props.location.state.data, d =>
+        {
+            return {
+                cases: d3.sum(d.map(c => c.cases)),
+                hosp: d3.sum(d.map(c => c.hosp)),
+                deaths: d3.sum(d.map(c => c.deaths)),
+                vax: d3.sum(d.map(c => c.vax))
+            }
+        }, d => d.month, d => d.year)
         let data = [] as CovidData[];
         Array.from(monthData).forEach(d => {            
             Array.from(d[1]).forEach(c => {
@@ -79,7 +92,8 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
                     date: new Date(`${c[0]}-${d[0]}-1`),
                     cases: c[1].cases,
                     deaths: c[1].deaths,
-                    hosp: c[1].hosp
+                    hosp: c[1].hosp,
+                    vax: c[1].vax
                 } as CovidData)
             }) 
         })
@@ -87,7 +101,15 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
     }
 
     private dataByYear() {
-        let yearData = d3.rollup(this.props.location.state.data, d => { return { cases: d3.sum(d.map(c => c.cases)), hosp: d3.sum(d.map(c => c.hosp)), deaths: d3.sum(d.map(c => c.deaths)) } }, d => d.year)
+        let yearData = d3.rollup(this.props.location.state.data,
+            d => {
+                return {
+                    cases: d3.sum(d.map(c => c.cases)),
+                    hosp: d3.sum(d.map(c => c.hosp)),
+                    deaths: d3.sum(d.map(c => c.deaths)),
+                    vax: d3.sum(d.map(c => c.vax))
+                }
+            }, d => d.year)
         this.updateData(Array.from(yearData, ([date, sum]) => ({ date: new Date(date + "-01-01"), cases: sum.cases, hosp: sum.hosp, deaths: sum.deaths }) as CovidData)) 
     }
 
@@ -97,7 +119,8 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
             scaleX: this.state.scaleX.domain(d3.extent(data.map(d => d.date))),
             scaleYCases: this.state.scaleYCases.domain([0, d3.max(data.map(d => d.cases))]),
             scaleYHosp: this.state.scaleYHosp.domain([0, d3.max(data.map(d => d.hosp))]),
-            scaleYDeaths: this.state.scaleYDeaths.domain([0, d3.max(data.map(d => d.deaths))])
+            scaleYDeaths: this.state.scaleYDeaths.domain([0, d3.max(data.map(d => d.deaths))]),
+            scaleYVax: this.state.scaleYVax.domain([0, d3.max(data.map(d => d.vax))])
         })
     }
 
@@ -106,7 +129,7 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
             <Card>
                 <CardBody>
                     <CardTitle>
-                        World COVID-19 Cases Timeline
+                        <h5>World COVID-19 Timeline</h5>
                     </CardTitle>
                     <CardSubtitle>
                         <ButtonGroup>
@@ -121,7 +144,7 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
                             </Button>
                         </ButtonGroup>
                     </CardSubtitle>
-                    <div ref={this.ref} style={{ width: "100%", height: "50vh" }}>
+                    <div ref={this.ref} style={{ width: "100%", height: "60vh" }}>
                         {this.state.isLoading ? <Spinner /> :
                             <svg preserveAspectRatio="xMinYMin meet" viewBox={`0 0 ${this.state.width + this.state.margin.left + this.state.margin.right} ${this.state.height + this.state.margin.top + this.state.margin.bottom}`}>
                                 <ContentContainer
@@ -228,7 +251,37 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
                                                 }
                                             }
                                         } as unknown as AreaProps}
-                                    />                                   
+                                    />  
+                                    <Line
+                                        {...
+                                        {
+                                            location:
+                                            {
+                                                state:
+                                                {
+                                                    scaleX: this.state.scaleX,
+                                                    scaleY: this.state.scaleYVax,
+                                                    data: this.state.data.map(d => { return { x: d.date, y: d.vax } as LineData }),
+                                                    color: "#009933"
+                                                }
+                                            }
+                                        } as unknown as LineProps}
+                                    />
+                                    <Area
+                                        {...
+                                        {
+                                            location:
+                                            {
+                                                state:
+                                                {
+                                                    scaleX: this.state.scaleX,
+                                                    scaleY: this.state.scaleYVax,
+                                                    data: this.state.data.map(d => { return { x: d.date, y: d.vax } as AreaData }),
+                                                    color: "#009933"
+                                                }
+                                            }
+                                        } as unknown as AreaProps}
+                                    /> 
                                 </ContentContainer>
                                 <Axis
                                     {...
@@ -285,6 +338,22 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
                                         {
                                             state:
                                             {
+                                                type: "left",
+                                                translateX: this.state.margin.left,
+                                                translateY: this.state.margin.top,
+                                                ticks: 4,
+                                                scale: this.state.scaleYVax
+                                            }
+                                        }
+                                    } as unknown as AxisProps}
+                                />
+                                <Axis
+                                    {...
+                                    {
+                                        location:
+                                        {
+                                            state:
+                                            {
                                                 type: "bottom",
                                                 translateX: this.state.margin.left,
                                                 translateY: this.state.margin.top + this.state.height,
@@ -308,6 +377,7 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
                                                 scaleYCases: this.state.scaleYCases,
                                                 scaleYHosp: this.state.scaleYHosp,
                                                 scaleYDeaths: this.state.scaleYDeaths,
+                                                scaleYVax: this.state.scaleYVax,
                                                 data: this.state.data
                                             }
                                         }

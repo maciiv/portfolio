@@ -25,9 +25,11 @@ var CovidWorldTimelineOverlay = /** @class */ (function (_super) {
         _this.refCircleCases = React.createRef();
         _this.refCircleHosp = React.createRef();
         _this.refCircleDeaths = React.createRef();
+        _this.refCircleVax = React.createRef();
         _this.refContentCases = React.createRef();
         _this.refContentHosp = React.createRef();
         _this.refContentDeaths = React.createRef();
+        _this.refContentVax = React.createRef();
         _this.state = {
             isOn: false
         };
@@ -39,6 +41,7 @@ var CovidWorldTimelineOverlay = /** @class */ (function (_super) {
         this.renderCircle(this.refCircleCases.current, scaledPosition.x, scaledPosition.yCases);
         this.renderCircle(this.refCircleHosp.current, scaledPosition.x, scaledPosition.yHosp);
         this.renderCircle(this.refCircleDeaths.current, scaledPosition.x, scaledPosition.yDeaths);
+        this.renderCircle(this.refCircleVax.current, scaledPosition.x, scaledPosition.yVax);
         this.renderContent(scaledPosition.x, scaledPosition.data);
     };
     CovidWorldTimelineOverlay.prototype.scalePosition = function (e) {
@@ -49,11 +52,13 @@ var CovidWorldTimelineOverlay = /** @class */ (function (_super) {
         var yCases = this.props.location.state.scaleYCases(this.props.location.state.data[i].cases);
         var yHosp = this.props.location.state.scaleYHosp(this.props.location.state.data[i].hosp);
         var yDeaths = this.props.location.state.scaleYDeaths(this.props.location.state.data[i].deaths);
+        var yVax = this.props.location.state.scaleYVax(this.props.location.state.data[i].vax);
         return {
             x: x,
             yCases: yCases,
             yHosp: yHosp,
             yDeaths: yDeaths,
+            yVax: yVax,
             data: this.props.location.state.data[i]
         };
     };
@@ -80,10 +85,13 @@ var CovidWorldTimelineOverlay = /** @class */ (function (_super) {
             .text(Math.round(data.cases));
         d3.select(this.refContentHosp.current)
             .select(".item-value")
-            .text("".concat(Math.round(data.hosp), " (").concat(Math.round(data.hosp / data.cases * 10000) / 100, "%)"));
+            .text("".concat(Math.round(data.hosp), " (").concat(data.cases === 0 ? 0 : Math.round(data.hosp / data.cases * 10000) / 100, "%)"));
         d3.select(this.refContentDeaths.current)
             .select(".item-value")
-            .text("".concat(Math.round(data.deaths), " (").concat(Math.round(data.deaths / data.cases * 10000) / 100, "%)"));
+            .text("".concat(Math.round(data.deaths), " (").concat(data.cases === 0 ? 0 : Math.round(data.deaths / data.cases * 10000) / 100, "%)"));
+        d3.select(this.refContentVax.current)
+            .select(".item-value")
+            .text("".concat(Math.round(data.vax)));
         var tooltipX = x + 10;
         if (this.refTooltipContent.current !== null) {
             var tooltipWidth = this.refTooltipContent.current.getBoundingClientRect().width;
@@ -100,7 +108,7 @@ var CovidWorldTimelineOverlay = /** @class */ (function (_super) {
             React.createElement("g", { opacity: this.state.isOn ? 1 : 0 },
                 React.createElement("line", { className: "tooltip-line" }),
                 React.createElement("g", { ref: this.refTooltipContent, className: "tooltip-content" },
-                    React.createElement("rect", { className: "content-background", y: -20, x: -5, width: 200, height: 80 }),
+                    React.createElement("rect", { className: "content-background", y: -20, x: -5, width: 200, height: 90 }),
                     React.createElement("text", { className: "content-title" }),
                     React.createElement("g", { className: "content" },
                         React.createElement("g", { ref: this.refContentCases },
@@ -114,10 +122,15 @@ var CovidWorldTimelineOverlay = /** @class */ (function (_super) {
                         React.createElement("g", { ref: this.refContentDeaths, transform: "translate(0, 30)" },
                             React.createElement("circle", { r: 5, fill: "#b30000", stroke: "#b30000" }),
                             React.createElement("text", { className: "item-name", x: 15 }, "Deaths: "),
+                            React.createElement("text", { className: "item-value", x: 65 })),
+                        React.createElement("g", { ref: this.refContentVax, transform: "translate(0, 45)" },
+                            React.createElement("circle", { r: 5, fill: "#009933", stroke: "#009933" }),
+                            React.createElement("text", { className: "item-name", x: 15 }, "Vax: "),
                             React.createElement("text", { className: "item-value", x: 65 })))),
                 React.createElement("circle", { ref: this.refCircleCases, r: 5, fill: "#0000b3", stroke: "#0000b3" }),
                 React.createElement("circle", { ref: this.refCircleHosp, r: 5, fill: "#b300b3", stroke: "#b300b3" }),
-                React.createElement("circle", { ref: this.refCircleDeaths, r: 5, fill: "#b30000", stroke: "#b30000" })),
+                React.createElement("circle", { ref: this.refCircleDeaths, r: 5, fill: "#b30000", stroke: "#b30000" }),
+                React.createElement("circle", { ref: this.refCircleVax, r: 5, fill: "#009933", stroke: "#009933" })),
             React.createElement("rect", { onMouseMove: function (e) { return _this.getPosition(e); }, onMouseEnter: function () { return _this.setState({ isOn: true }); }, onMouseLeave: function () { return _this.setState({ isOn: false }); }, width: this.props.location.state.width, height: this.props.location.state.height, opacity: 0 })));
     };
     return CovidWorldTimelineOverlay;

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Col, Container, Row, Spinner } from 'reactstrap';
 import { ApplicationState } from '../../store';
 import * as CovidStore from '../../store/Covid';
-import CovidWorld, { CovidWorldProps } from './CovidWorld';
 
 type CovidDashboardProps =
     CovidStore.CovidState
@@ -19,9 +18,18 @@ class CovidDashboard extends React.PureComponent<CovidDashboardProps> {
         return (
             <React.Fragment>
                 <Container>
-                    {this.props.world.length === 0 ? <Spinner /> :
-                        <CovidWorld {...{ location: { state: { data: this.props.world } } } as unknown as CovidWorldProps} />
-                    }
+                    <Row className="my-4">
+                        {this.props.world.length === 0 ? <Spinner /> :
+                            <Col md="12" className="d-flex my-2">
+                                <Link to={{ pathname: "/visualisations/covid-dashboard/world", state: { data: this.props.world } }} className="btn btn-secondary btn-block mx-auto w-50">Covid World Dashboard</Link>
+                            </Col>
+                        }
+                        {this.props.countries.length === 0 ? <Spinner /> :
+                            <Col md="12" className="d-flex my-2">
+                                <Link to={{ pathname: "/visualisations/covid-dashboard/countries", state: { data: this.props.countries } }} className="btn btn-secondary btn-block mx-auto w-50">Covid Countries Dashboard</Link>
+                            </Col>
+                        } 
+                    </Row>
                 </Container>
             </React.Fragment>
         );
@@ -29,6 +37,7 @@ class CovidDashboard extends React.PureComponent<CovidDashboardProps> {
 
     private ensureDataFetched() {
         this.props.requestCovidWorld();
+        this.props.requestCovidCountries();
     }
 };
 
