@@ -4,6 +4,7 @@ import { ChartMargin } from '../../assets/js/CustomMethods';
 import { Card, CardBody, CardSubtitle, CardTitle, Col, Row, Spinner } from 'reactstrap';
 import * as d3 from 'd3';
 import { CovidData } from '../../store/Covid';
+import CovidCountriesMap, { CovidCountriesMapProps } from './CovidCountriesMap';
 
 export type CovidCountriesProps =
     RouteComponentProps<{}, {}, { data: CovidData[] }>
@@ -12,7 +13,7 @@ export default class CovidCountries extends React.PureComponent<CovidCountriesPr
     width: number,
     height: number,
     margin: ChartMargin,
-    data: CovidData[],
+    data: d3.HierarchyNode<CovidData>,
     isLoading: boolean
 }> {
     ref = React.createRef<HTMLDivElement>();
@@ -20,7 +21,7 @@ export default class CovidCountries extends React.PureComponent<CovidCountriesPr
         width: 0,
         height: 0,
         margin: { top: 10, right: 30, bottom: 30, left: 80 } as ChartMargin,
-        data: this.props.location.state.data,
+        data: {} as d3.HierarchyNode<CovidData>,
         isLoading: true
     }
 
@@ -30,22 +31,37 @@ export default class CovidCountries extends React.PureComponent<CovidCountriesPr
 
     private renderTreeMap() {
         if (this.ref.current === null) return;
-        let width = this.ref.current.getBoundingClientRect().width - this.state.margin.left - this.state.margin.right;
-        let height = this.ref.current.getBoundingClientRect().height - this.state.margin.top - this.state.margin.bottom;
+        const width = this.ref.current.getBoundingClientRect().width - this.state.margin.left - this.state.margin.right;
+        const height = this.ref.current.getBoundingClientRect().height - this.state.margin.top - this.state.margin.bottom;
+        console.log(this.props.location.state.data)
+        let test = d3.stratify<CovidData>()
+            .id(d => d.country)
+            .parentId(d => d.continent)
+            (this.props.location.state.data)
+        console.log(test)
+        this.setState({
+            width: width,
+            height: height,
+            data: test,
+            isLoading: false
+        });
     }
 
     public render() {
         return (
             <React.Fragment>
-                {this.state.isLoading ? <Spinner /> :
-                    <Row className="m-4">
-                        <Col md="12" className="mt-3">
-                            {this.state.isLoading ? <Spinner /> :
-                                <svg preserveAspectRatio="xMinYMin meet" viewBox={`0 0 ${this.state.width + this.state.margin.left + this.state.margin.right} ${this.state.height + this.state.margin.top + this.state.margin.bottom}`}>
-                                </svg>}
-                        </Col>
-                    </Row>
-                }
+                <Row className="m-4">
+                    <Col md="12" className="mt-3">
+                        <CovidCountriesMap {...
+                            {
+                                location: {
+                                    state: {
+                                        data: this.props.location.state.data
+                                    }
+                                }
+                            } as unknown as CovidCountriesMapProps} />                         
+                    </Col>
+                </Row>
             </React.Fragment>
         );
     }

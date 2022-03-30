@@ -9,7 +9,7 @@ export interface CovidState {
 
 export interface CovidData {
     continent: string,
-    location: string,
+    country: string,
     year: number,
     month: number,
     day: number
