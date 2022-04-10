@@ -28,46 +28,28 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var reactstrap_1 = require("reactstrap");
-var d3 = require("d3");
 var CovidCountriesMap_1 = require("./CovidCountriesMap");
 var CovidCountries = /** @class */ (function (_super) {
     __extends(CovidCountries, _super);
     function CovidCountries() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.ref = React.createRef();
         _this.state = {
-            width: 0,
-            height: 0,
-            margin: { top: 10, right: 30, bottom: 30, left: 80 },
-            data: {},
             isLoading: true
         };
         return _this;
     }
     CovidCountries.prototype.componentDidMount = function () {
-        this.renderTreeMap();
+        this.loaded();
     };
-    CovidCountries.prototype.renderTreeMap = function () {
-        if (this.ref.current === null)
-            return;
-        var width = this.ref.current.getBoundingClientRect().width - this.state.margin.left - this.state.margin.right;
-        var height = this.ref.current.getBoundingClientRect().height - this.state.margin.top - this.state.margin.bottom;
-        console.log(this.props.location.state.data);
-        var test = d3.stratify()
-            .id(function (d) { return d.country; })
-            .parentId(function (d) { return d.continent; })(this.props.location.state.data);
-        console.log(test);
+    CovidCountries.prototype.loaded = function () {
         this.setState({
-            width: width,
-            height: height,
-            data: test,
             isLoading: false
         });
     };
     CovidCountries.prototype.render = function () {
         return (React.createElement(React.Fragment, null,
             React.createElement(reactstrap_1.Row, { className: "m-4" },
-                React.createElement(reactstrap_1.Col, { md: "12", className: "mt-3" },
+                React.createElement(reactstrap_1.Col, { md: "9", className: "mt-3" },
                     React.createElement(CovidCountriesMap_1.default, __assign({}, {
                         location: {
                             state: {

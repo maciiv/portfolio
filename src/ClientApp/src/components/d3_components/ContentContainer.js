@@ -24,9 +24,9 @@ var ContentContainer = /** @class */ (function (_super) {
         return _this;
     }
     ContentContainer.prototype.render = function () {
-        return (React.createElement("g", { transform: "translate(".concat(this.props.location.state.translateX, ", ").concat(this.props.location.state.translateY, ")"), clipPath: "url(#".concat(this.ref, ")") },
+        return (React.createElement("g", { transform: "translate(".concat(this.props.location.state.translateX, ", ").concat(this.props.location.state.translateY, ")"), clipPath: "url(#clip)" },
             React.createElement("rect", { className: "zoom", width: this.props.location.state.width, height: this.props.location.state.height }),
-            React.createElement("clipPath", { ref: this.ref },
+            React.createElement("clipPath", { id: "clip", ref: this.ref },
                 React.createElement("rect", { x: "1", width: this.props.location.state.width, height: this.props.location.state.height })),
             this.props.children));
     };

@@ -14,8 +14,8 @@ export default class GeoPath extends React.PureComponent<GeoPathProps, { project
     ref = React.createRef<SVGPathElement>();
     public state = {
         projection: d3.geoMercator()
-            .scale(130)
-            .center([0, 20])
+            .scale(135)
+            .center([0, 45])
             .translate([this.props.location.state.width / 2, this.props.location.state.height / 2])
     }
 
@@ -41,8 +41,9 @@ export default class GeoPath extends React.PureComponent<GeoPathProps, { project
     public render() {
         return (
             <path ref={this.ref}
-                fill="none"
-                stroke={this.props.location.state.color}
+                clipPath="url(#clip)"
+                fill={this.props.location.state.color}
+                stroke="black"
             />
         )
     }

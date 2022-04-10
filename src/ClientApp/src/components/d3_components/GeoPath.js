@@ -24,8 +24,8 @@ var GeoPath = /** @class */ (function (_super) {
         _this.ref = React.createRef();
         _this.state = {
             projection: d3.geoMercator()
-                .scale(130)
-                .center([0, 20])
+                .scale(135)
+                .center([0, 45])
                 .translate([_this.props.location.state.width / 2, _this.props.location.state.height / 2])
         };
         return _this;
@@ -47,7 +47,7 @@ var GeoPath = /** @class */ (function (_super) {
             .ease(d3.easeLinear);
     };
     GeoPath.prototype.render = function () {
-        return (React.createElement("path", { ref: this.ref, fill: "none", stroke: this.props.location.state.color }));
+        return (React.createElement("path", { ref: this.ref, clipPath: "url(#clip)", fill: this.props.location.state.color, stroke: "black" }));
     };
     return GeoPath;
 }(React.PureComponent));
