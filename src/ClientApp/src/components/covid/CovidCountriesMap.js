@@ -32,6 +32,7 @@ var d3 = require("d3");
 var ContentContainer_1 = require("../d3_components/ContentContainer");
 var GeoPath_1 = require("../d3_components/GeoPath");
 var CovidCountriesMapLegend_1 = require("./CovidCountriesMapLegend");
+var Tooltip_1 = require("../d3_components/Tooltip");
 var CovidCountriesMap = /** @class */ (function (_super) {
     __extends(CovidCountriesMap, _super);
     function CovidCountriesMap() {
@@ -46,6 +47,8 @@ var CovidCountriesMap = /** @class */ (function (_super) {
             filterData: [],
             colorScale: {},
             color: d3.interpolateBlues,
+            tooltipTitle: undefined,
+            tooltipValue: [],
             isLoading: true
         };
         return _this;
@@ -74,7 +77,6 @@ var CovidCountriesMap = /** @class */ (function (_super) {
                 var country = _a[0], sum = _a[1];
                 return ({ country: country, cases: sum.cases, hosp: sum.hosp, deaths: sum.deaths, vax: sum.vax });
             });
-            console.log(data);
             _this.setState({
                 width: width,
                 height: height,
@@ -125,6 +127,17 @@ var CovidCountriesMap = /** @class */ (function (_super) {
             color: d3.interpolateGreens
         });
     };
+    CovidCountriesMap.prototype.geoMapHover = function (e, country) {
+        var find = this.state.filterData.find(function (d) { return d.country == country; });
+        var value = 0;
+        if (find !== undefined) {
+            value = find.data;
+        }
+        this.setState({
+            tooltipTitle: country,
+            tooltipValue: [{ name: "Value", value: value }]
+        });
+    };
     CovidCountriesMap.prototype.render = function () {
         var _this = this;
         return (React.createElement(React.Fragment, null,
@@ -149,18 +162,30 @@ var CovidCountriesMap = /** @class */ (function (_super) {
                                         translateY: this.state.margin.top
                                     }
                                 }
-                            }), this.state.geoData.features.map(function (d) {
-                                return React.createElement(GeoPath_1.default, __assign({}, {
+                            }),
+                                this.state.geoData.features.map(function (d) {
+                                    return React.createElement(GeoPath_1.default, __assign({}, {
+                                        location: {
+                                            state: {
+                                                width: _this.state.width,
+                                                height: _this.state.height,
+                                                data: d,
+                                                color: _this.state.color(_this.state.colorScale(_this.filterBy(d.properties["name"]))),
+                                                hover: _this.geoMapHover.bind(_this)
+                                            }
+                                        }
+                                    }));
+                                }),
+                                React.createElement(Tooltip_1.default, __assign({}, {
                                     location: {
                                         state: {
-                                            width: _this.state.width,
-                                            height: _this.state.height,
-                                            data: d,
-                                            color: _this.state.color(_this.state.colorScale(_this.filterBy(d.properties["name"])))
+                                            translateX: 0,
+                                            translateY: 0,
+                                            title: this.state.tooltipTitle,
+                                            values: this.state.tooltipValue
                                         }
                                     }
-                                }));
-                            })),
+                                }))),
                             React.createElement(CovidCountriesMapLegend_1.default, __assign({}, {
                                 location: {
                                     state: {

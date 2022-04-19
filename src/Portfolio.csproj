@@ -41,6 +41,7 @@
     <None Remove="ClientApp\src\components\d3_components\GeoPath.tsx" />
     <None Remove="ClientApp\src\components\d3_components\Line.tsx" />
     <None Remove="ClientApp\src\components\d3_components\OverlayContainer.tsx" />
+    <None Remove="ClientApp\src\components\d3_components\Tooltip.tsx" />
     <None Remove="ClientApp\src\components\Footer.tsx" />
     <None Remove="ClientApp\src\components\Hero.tsx" />
     <None Remove="ClientApp\src\components\PortfolioItems.tsx" />

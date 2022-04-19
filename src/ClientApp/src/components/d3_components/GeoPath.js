@@ -47,7 +47,8 @@ var GeoPath = /** @class */ (function (_super) {
             .ease(d3.easeLinear);
     };
     GeoPath.prototype.render = function () {
-        return (React.createElement("path", { ref: this.ref, clipPath: "url(#clip)", fill: this.props.location.state.color, stroke: "black" }));
+        var _this = this;
+        return (React.createElement("path", { ref: this.ref, clipPath: "url(#clip)", fill: this.props.location.state.color, stroke: "black", onMouseEnter: function (e) { return _this.props.location.state.hover(e, _this.props.location.state.data.properties["name"]); }, onMouseLeave: function (e) { return _this.props.location.state.hover(e, undefined); } }));
     };
     return GeoPath;
 }(React.PureComponent));

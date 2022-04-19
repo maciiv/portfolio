@@ -7,7 +7,8 @@ export type GeoPathProps =
         width: number,
         height: number,
         data: d3.ExtendedFeature,
-        color: string
+        color: string,
+        hover: Function
     }>;
 
 export default class GeoPath extends React.PureComponent<GeoPathProps, { projection: d3.GeoProjection }> {
@@ -44,6 +45,8 @@ export default class GeoPath extends React.PureComponent<GeoPathProps, { project
                 clipPath="url(#clip)"
                 fill={this.props.location.state.color}
                 stroke="black"
+                onMouseEnter={(e) => this.props.location.state.hover(e, this.props.location.state.data.properties["name"])}
+                onMouseLeave={(e) => this.props.location.state.hover(e, undefined)}
             />
         )
     }

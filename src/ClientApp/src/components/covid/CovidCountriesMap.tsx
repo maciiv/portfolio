@@ -7,6 +7,8 @@ import { CovidData } from '../../store/Covid';
 import ContentContainer, { ContentContainerProps } from '../d3_components/ContentContainer';
 import GeoPath, { GeoPathProps } from '../d3_components/GeoPath';
 import CovidCountriesMapLegend, { CovidCountriesMapLegendProps } from './CovidCountriesMapLegend';
+import { ExtendedFeature } from 'd3';
+import Tooltip, { TooltipProps, TooltipValues } from '../d3_components/Tooltip';
 
 type FilterData = {
     country: string,
@@ -25,6 +27,8 @@ export default class CovidCountriesMap extends React.PureComponent<CovidCountrie
     filterData: FilterData[],
     colorScale: d3.ScaleLinear<number, number, never>,
     color: Function,
+    tooltipTitle: string | undefined,
+    tooltipValue: TooltipValues[],
     isLoading: boolean
 }> {
     ref = React.createRef<HTMLDivElement>();
@@ -33,10 +37,12 @@ export default class CovidCountriesMap extends React.PureComponent<CovidCountrie
         height: 0,
         margin: { top: 10, right: 150, bottom: 30, left: 30 } as ChartMargin,
         data: this.props.location.state.data,
-        geoData: {} as d3.ExtendedFeatureCollection,
+        geoData: {} as d3.ExtendedFeatureCollection<ExtendedFeature<d3.GeoGeometryObjects>>,
         filterData: [] as FilterData[],
         colorScale: {} as d3.ScaleLinear<number, number, never>,
         color: d3.interpolateBlues,
+        tooltipTitle: undefined,
+        tooltipValue: [] as TooltipValues[],
         isLoading: true
     }
 
@@ -62,7 +68,6 @@ export default class CovidCountriesMap extends React.PureComponent<CovidCountrie
                         }
                     }, d => d.country);
                 const data = Array.from(countriesData, ([country, sum]) => ({ country: country, cases: sum.cases, hosp: sum.hosp, deaths: sum.deaths, vax: sum.vax }) as CovidData)
-                console.log(data)
                 this.setState({
                     width: width,
                     height: height,
@@ -117,6 +122,18 @@ export default class CovidCountriesMap extends React.PureComponent<CovidCountrie
         })
     }
 
+    private geoMapHover(e: React.MouseEvent<SVGPathElement, MouseEvent>, country: string) {
+        let find = this.state.filterData.find(d => d.country == country);
+        let value = 0
+        if (find !== undefined) {
+            value = find.data
+        }
+        this.setState({
+            tooltipTitle: country,
+            tooltipValue: [{ name: "Value", value: value }]
+        })
+    }
+
     public render() {
         return (
             <React.Fragment>
@@ -166,11 +183,23 @@ export default class CovidCountriesMap extends React.PureComponent<CovidCountrie
                                                             width: this.state.width,
                                                             height: this.state.height,
                                                             data: d,
-                                                            color: this.state.color(this.state.colorScale(this.filterBy(d.properties["name"])))
+                                                            color: this.state.color(this.state.colorScale(this.filterBy(d.properties["name"]))),
+                                                            hover: this.geoMapHover.bind(this)
                                                         }
                                                     }
                                                 } as unknown as GeoPathProps} />
-                                        )}                                       
+                                        )}
+                                        <Tooltip {...
+                                            {
+                                                location: {
+                                                    state: {
+                                                        translateX: 0,
+                                                        translateY: 0,
+                                                        title: this.state.tooltipTitle,
+                                                        values: this.state.tooltipValue
+                                                    }
+                                                }
+                                            } as unknown as TooltipProps} />
                                     </ContentContainer>
                                     <CovidCountriesMapLegend {...
                                         {
