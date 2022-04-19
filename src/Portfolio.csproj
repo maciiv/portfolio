@@ -29,6 +29,7 @@
     <None Remove="ClientApp\src\assets\js\CustomMethods.ts" />
     <None Remove="ClientApp\src\components\covid\CovidCountries.tsx" />
     <None Remove="ClientApp\src\components\covid\CovidCountriesMap.tsx" />
+    <None Remove="ClientApp\src\components\covid\CovidCountriesMapLegend.tsx" />
     <None Remove="ClientApp\src\components\covid\CovidDashboard.tsx" />
     <None Remove="ClientApp\src\components\covid\CovidWorld.tsx" />
     <None Remove="ClientApp\src\components\covid\CovidWorldTimeline.tsx" />
