@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Button, ButtonGroup, Card, CardBody, CardSubtitle, CardTitle, Spinner } from 'reactstrap';
 import { CovidData } from '../../store/Covid';
 import * as d3 from 'd3';
-import { ChartMargin } from '../../assets/js/CustomMethods';
+import { IChartMargin } from '../../assets/js/CustomMethods';
 import ContentContainer, { ContentContainerProps } from '../d3_components/ContentContainer';
 import Axis, { AxisProps } from '../d3_components/Axis';
 import Line, { LineData, LineProps } from '../d3_components/Line';
@@ -16,7 +16,7 @@ export type CovidWorldTimelineProps =
 export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTimelineProps, {
     width: number,
     height: number,
-    margin: ChartMargin,
+    margin: IChartMargin,
     data: CovidData[],
     scaleX: d3.ScaleTime<number, number, never>,
     scaleYCases: d3.ScaleLinear<number, number, never>,
@@ -29,7 +29,7 @@ export default class CovidWorldTimeline extends React.PureComponent<CovidWorldTi
     public state = {
         width: 0,
         height: 0,
-        margin: { top: 10, right: 30, bottom: 30, left: 80 } as ChartMargin,
+        margin: { top: 10, right: 30, bottom: 30, left: 80 } as IChartMargin,
         data: this.props.location.state.data,
         scaleX: {} as d3.ScaleTime<number, number, never>,
         scaleYCases: {} as d3.ScaleLinear<number, number, never>,

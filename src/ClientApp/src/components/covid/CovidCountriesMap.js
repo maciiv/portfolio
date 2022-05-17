@@ -47,8 +47,7 @@ var CovidCountriesMap = /** @class */ (function (_super) {
             filterData: [],
             colorScale: {},
             color: d3.interpolateBlues,
-            tooltipTitle: undefined,
-            tooltipValue: [],
+            tooltipInteraction: {},
             isLoading: true
         };
         return _this;
@@ -134,8 +133,17 @@ var CovidCountriesMap = /** @class */ (function (_super) {
             value = find.data;
         }
         this.setState({
-            tooltipTitle: country,
-            tooltipValue: [{ name: "Value", value: value }]
+            tooltipInteraction: {
+                x: d3.pointer(e)[0],
+                y: d3.pointer(e)[1],
+                width: this.state.width,
+                height: this.state.height,
+                title: country,
+                tooltipValues: [{
+                        name: "Value",
+                        value: Math.round(value)
+                    }]
+            }
         });
     };
     CovidCountriesMap.prototype.render = function () {
@@ -179,10 +187,12 @@ var CovidCountriesMap = /** @class */ (function (_super) {
                                 React.createElement(Tooltip_1.default, __assign({}, {
                                     location: {
                                         state: {
-                                            translateX: 0,
-                                            translateY: 0,
-                                            title: this.state.tooltipTitle,
-                                            values: this.state.tooltipValue
+                                            x: this.state.tooltipInteraction.x,
+                                            y: this.state.tooltipInteraction.y,
+                                            width: this.state.tooltipInteraction.width,
+                                            height: this.state.tooltipInteraction.height,
+                                            title: this.state.tooltipInteraction.title,
+                                            tooltipValues: this.state.tooltipInteraction.tooltipValues
                                         }
                                     }
                                 }))),

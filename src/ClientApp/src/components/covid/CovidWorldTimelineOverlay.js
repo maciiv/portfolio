@@ -17,6 +17,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var d3 = require("d3");
+var CustomMethods_1 = require("../../assets/js/CustomMethods");
 var CovidWorldTimelineOverlay = /** @class */ (function (_super) {
     __extends(CovidWorldTimelineOverlay, _super);
     function CovidWorldTimelineOverlay() {
@@ -31,7 +32,8 @@ var CovidWorldTimelineOverlay = /** @class */ (function (_super) {
         _this.refContentDeaths = React.createRef();
         _this.refContentVax = React.createRef();
         _this.state = {
-            isOn: false
+            isOn: false,
+            position: new CustomMethods_1.PositionTooltip()
         };
         return _this;
     }
@@ -92,15 +94,8 @@ var CovidWorldTimelineOverlay = /** @class */ (function (_super) {
         d3.select(this.refContentVax.current)
             .select(".item-value")
             .text("".concat(Math.round(data.vax)));
-        var tooltipX = x + 10;
-        if (this.refTooltipContent.current !== null) {
-            var tooltipWidth = this.refTooltipContent.current.getBoundingClientRect().width;
-            if (tooltipX + tooltipWidth > this.props.location.state.width) {
-                tooltipX = x - tooltipWidth - 5;
-            }
-        }
         d3.select(".tooltip-content")
-            .attr("transform", "translate(".concat(tooltipX, ", 30)"));
+            .attr("transform", "translate(".concat(this.state.position.translateX(x + 10, this.props.location.state.width, this.refTooltipContent), ", 30)"));
     };
     CovidWorldTimelineOverlay.prototype.render = function () {
         var _this = this;

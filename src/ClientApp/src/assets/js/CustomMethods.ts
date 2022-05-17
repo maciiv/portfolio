@@ -1,4 +1,6 @@
-﻿export interface ICancelablePromise<T> {
+﻿import * as React from 'react';
+
+export interface ICancelablePromise<T> {
     promise: Promise<T>,
     canceled: boolean
     cancel()
@@ -21,23 +23,44 @@ export class CancelablePromise<T> implements ICancelablePromise<T> {
     }
 }
 
-export interface Chart {
-    width: number;
-    height: number;
-    margin: ChartMargin;
-    x: IChartAxis,
-    y: IChartAxis
-}
-
-export interface ChartMargin {
+export interface IChartMargin {
     top: number;
     right: number;
     bottom: number;
     left: number;
 }
 
-export interface IChartAxis {
-    scale: d3.ScaleBand<string> | d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never>;
-    axis: d3.Axis<d3.AxisDomain>;
-    label: string;
+export interface IPositionTooltip {
+    translateX(x: number, width: number, ref: React.RefObject<SVGGElement>): number,
+    translateY?(y: number, height: number, ref: React.RefObject<SVGGElement>): number
+}
+
+export class PositionTooltip implements IPositionTooltip {
+    translateX(x: number, width: number, ref: React.RefObject<SVGGElement>): number {
+        if (x === undefined) {
+            return 0
+        }
+
+        if (ref.current !== null) {
+            const tooltipWidth = ref.current.getBoundingClientRect().width;
+            if (x + tooltipWidth > width) {
+                return x - tooltipWidth - 5
+            }
+        }
+        return x
+    }
+    translateY(y: number, height: number, ref: React.RefObject<SVGGElement>): number {
+        if (y === undefined) {
+            return 0
+        }
+
+        if (ref.current !== null) {
+            const tooltipHeight = ref.current.getBoundingClientRect().height;
+            if (y + tooltipHeight > height) {
+                return y - tooltipHeight - 10
+            }
+        }
+
+        return y
+    }
 }

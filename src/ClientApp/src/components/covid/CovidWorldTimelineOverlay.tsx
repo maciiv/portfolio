@@ -2,6 +2,7 @@
 import { RouteComponentProps } from 'react-router-dom';
 import * as d3 from 'd3';
 import { CovidData } from '../../store/Covid';
+import { PositionTooltip } from '../../assets/js/CustomMethods'
 
 export type CovidWorldTimelineOverlayProps =
     RouteComponentProps<{}, {}, {
@@ -26,7 +27,7 @@ type scaledPosition = {
     data: CovidData
 }
 
-export default class CovidWorldTimelineOverlay extends React.PureComponent<CovidWorldTimelineOverlayProps, { isOn: boolean }> {
+export default class CovidWorldTimelineOverlay extends React.PureComponent<CovidWorldTimelineOverlayProps, { isOn: boolean, position: PositionTooltip }> {
     refTooltipContent = React.createRef<SVGGElement>();
     refCircleCases = React.createRef<SVGCircleElement>();
     refCircleHosp = React.createRef<SVGCircleElement>();
@@ -37,7 +38,8 @@ export default class CovidWorldTimelineOverlay extends React.PureComponent<Covid
     refContentDeaths = React.createRef<SVGGElement>();
     refContentVax = React.createRef<SVGGElement>();
     public state = {
-        isOn: false
+        isOn: false,
+        position: new PositionTooltip()
     }
 
     private getPosition(e: React.MouseEvent<SVGRectElement, MouseEvent>) {
@@ -100,16 +102,9 @@ export default class CovidWorldTimelineOverlay extends React.PureComponent<Covid
             .text(`${Math.round(data.deaths)} (${data.cases === 0 ? 0 : Math.round(data.deaths / data.cases * 10000) / 100}%)`)
         d3.select(this.refContentVax.current)
             .select(".item-value")
-            .text(`${Math.round(data.vax)}`)
-        let tooltipX = x + 10
-        if (this.refTooltipContent.current !== null) {
-            const tooltipWidth = this.refTooltipContent.current.getBoundingClientRect().width;
-            if (tooltipX + tooltipWidth > this.props.location.state.width) {
-                tooltipX = x - tooltipWidth - 5
-            }
-        }      
+            .text(`${Math.round(data.vax)}`)      
         d3.select(".tooltip-content")
-            .attr("transform", `translate(${tooltipX}, 30)`)
+            .attr("transform", `translate(${this.state.position.translateX(x + 10, this.props.location.state.width, this.refTooltipContent)}, 30)`)
     }
 
     public render() {

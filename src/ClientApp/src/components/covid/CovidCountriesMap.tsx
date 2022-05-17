@@ -8,7 +8,7 @@ import ContentContainer, { ContentContainerProps } from '../d3_components/Conten
 import GeoPath, { GeoPathProps } from '../d3_components/GeoPath';
 import CovidCountriesMapLegend, { CovidCountriesMapLegendProps } from './CovidCountriesMapLegend';
 import { ExtendedFeature } from 'd3';
-import Tooltip, { TooltipProps, TooltipValues } from '../d3_components/Tooltip';
+import Tooltip, { TooltipInteraction, TooltipProps, TooltipValues } from '../d3_components/Tooltip';
 
 type FilterData = {
     country: string,
@@ -27,8 +27,7 @@ export default class CovidCountriesMap extends React.PureComponent<CovidCountrie
     filterData: FilterData[],
     colorScale: d3.ScaleLinear<number, number, never>,
     color: Function,
-    tooltipTitle: string | undefined,
-    tooltipValue: TooltipValues[],
+    tooltipInteraction: TooltipInteraction,
     isLoading: boolean
 }> {
     ref = React.createRef<HTMLDivElement>();
@@ -41,8 +40,7 @@ export default class CovidCountriesMap extends React.PureComponent<CovidCountrie
         filterData: [] as FilterData[],
         colorScale: {} as d3.ScaleLinear<number, number, never>,
         color: d3.interpolateBlues,
-        tooltipTitle: undefined,
-        tooltipValue: [] as TooltipValues[],
+        tooltipInteraction: {} as TooltipInteraction,
         isLoading: true
     }
 
@@ -129,8 +127,17 @@ export default class CovidCountriesMap extends React.PureComponent<CovidCountrie
             value = find.data
         }
         this.setState({
-            tooltipTitle: country,
-            tooltipValue: [{ name: "Value", value: value }]
+            tooltipInteraction: {
+                x: d3.pointer(e)[0],
+                y: d3.pointer(e)[1],
+                width: this.state.width,
+                height: this.state.height,
+                title: country,
+                tooltipValues: [{
+                    name: "Value",
+                    value: Math.round(value)
+                }]
+            }
         })
     }
 
@@ -193,10 +200,12 @@ export default class CovidCountriesMap extends React.PureComponent<CovidCountrie
                                             {
                                                 location: {
                                                     state: {
-                                                        translateX: 0,
-                                                        translateY: 0,
-                                                        title: this.state.tooltipTitle,
-                                                        values: this.state.tooltipValue
+                                                        x: this.state.tooltipInteraction.x,
+                                                        y: this.state.tooltipInteraction.y,
+                                                        width: this.state.tooltipInteraction.width,
+                                                        height: this.state.tooltipInteraction.height,
+                                                        title: this.state.tooltipInteraction.title,
+                                                        tooltipValues: this.state.tooltipInteraction.tooltipValues
                                                     }
                                                 }
                                             } as unknown as TooltipProps} />
